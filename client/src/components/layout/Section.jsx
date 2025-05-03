@@ -12,12 +12,12 @@ const Section = ({
       {(title || description) && (
         <div className="mb-6">
           {title && (
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {title}
             </h2>
           )}
           {description && (
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
               {description}
             </p>
           )}
@@ -35,4 +35,4 @@ Section.propTypes = {
   className: PropTypes.string,
 };
 
-export default Section; 
+export default Section;

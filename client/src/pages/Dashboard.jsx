@@ -9,7 +9,7 @@ const StatCard = ({ title, value, icon: Icon, trend }) => (
     </div>
     <div className="p-4">
       <h3 className="text-sm font-medium text-gray-500">{title}</h3>
-      <p className="mt-2 text-3xl font-bold text-gray-900">{value}</p>
+      <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-gray-100">{value}</p>
       {trend && (
         <p className={`mt-2 text-sm ${trend > 0 ? 'text-green-600' : 'text-red-600'}`}>
           {trend > 0 ? '↑' : '↓'} {Math.abs(trend)}% from last month
@@ -21,7 +21,7 @@ const StatCard = ({ title, value, icon: Icon, trend }) => (
 
 const RecentActivityCard = ({ activity }) => (
   <Card className="p-4">
-    <h3 className="font-medium text-gray-900">Recent Activity</h3>
+    <h3 className="font-medium text-gray-900 dark:text-gray-100">Recent Activity</h3>
     <div className="mt-4 space-y-4">
       {activity.map((item, index) => (
         <div key={index} className="flex items-start space-x-3">
@@ -29,7 +29,7 @@ const RecentActivityCard = ({ activity }) => (
             <div className={`w-2 h-2 mt-2 rounded-full ${item.type === 'completed' ? 'bg-green-500' : 'bg-indigo-500'}`} />
           </div>
           <div>
-            <p className="text-sm text-gray-900">{item.title}</p>
+            <p className="text-sm text-gray-900 dark:text-gray-100">{item.title}</p>
             <p className="text-xs text-gray-500">{item.time}</p>
           </div>
         </div>
@@ -40,11 +40,11 @@ const RecentActivityCard = ({ activity }) => (
 
 const RecommendedCard = ({ recommendations }) => (
   <Card className="p-4">
-    <h3 className="font-medium text-gray-900">Recommended for You</h3>
+    <h3 className="font-medium text-gray-900 dark:text-gray-100">Recommended for You</h3>
     <div className="mt-4 space-y-4">
       {recommendations.map((item, index) => (
-        <div key={index} className="p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer">
-          <h4 className="text-sm font-medium text-gray-900">{item.title}</h4>
+        <div key={index} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 transition-colors cursor-pointer">
+          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</h4>
           <p className="mt-1 text-xs text-gray-500">{item.description}</p>
           <div className="mt-2 flex items-center text-xs text-gray-500">
             <span>{item.duration} min</span>
@@ -106,7 +106,7 @@ const Dashboard = () => {
 
           {/* Learning Progress */}
           <Card className="p-6">
-            <h3 className="font-medium text-gray-900 mb-4">Overall Progress</h3>
+            <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Overall Progress</h3>
             <ProgressBar
               progress={68}
               size="lg"

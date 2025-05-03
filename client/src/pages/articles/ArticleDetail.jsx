@@ -50,7 +50,7 @@ To start using React, you'll need to:
     <div className="max-w-4xl mx-auto p-6">
       {/* Article Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">{article.title}</h1>
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">{article.title}</h1>
         <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-3">
             <img
@@ -59,11 +59,11 @@ To start using React, you'll need to:
               className="w-10 h-10 rounded-full"
             />
             <div>
-              <p className="font-medium text-gray-900">{article.author.name}</p>
+              <p className="font-medium text-gray-900 dark:text-gray-100">{article.author.name}</p>
               <p className="text-sm text-gray-500">{article.author.role}</p>
             </div>
           </div>
-          <div className="flex items-center space-x-2 text-gray-500">
+          <div className="flex items-center space-x-2 text-gray-500 dark:text-gray-100">
             <span>{new Date(article.publishedDate).toLocaleDateString()}</span>
             <span>•</span>
             <span>{article.readTime} read</span>
@@ -100,7 +100,7 @@ To start using React, you'll need to:
             return (
               <ol key={index} className="list-decimal list-inside my-4">
                 {paragraph.split('\\n').map((item, i) => (
-                  <li key={i} className="text-gray-700 my-2">
+                  <li key={i} className="text-gray-700  my-2">
                     {item.replace(/^\d\./, '').trim()}
                   </li>
                 ))}
@@ -108,7 +108,7 @@ To start using React, you'll need to:
             );
           }
           return (
-            <p key={index} className="text-gray-700 my-4">
+            <p key={index} className="text-gray-700 dark:text-gray-300 my-4">
               {paragraph}
             </p>
           );

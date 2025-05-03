@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import LoadingSpinner from './LoadingSpinner';
 
 const variants = {
-  primary: 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm',
-  secondary: 'bg-teal-500 hover:bg-teal-600 text-white shadow-sm',
-  outline: 'border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 bg-white',
-  ghost: 'text-indigo-600 hover:bg-indigo-50 bg-transparent',
-  danger: 'bg-red-600 hover:bg-red-700 text-white shadow-sm',
-  success: 'bg-green-600 hover:bg-green-700 text-white shadow-sm',
+  primary: 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm dark:bg-indigo-700 dark:hover:bg-indigo-600',
+  secondary: 'bg-teal-500 hover:bg-teal-600 text-white shadow-sm dark:bg-teal-600 dark:hover:bg-teal-500',
+  outline: 'border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 bg-white dark:border-indigo-400 dark:text-indigo-400 dark:bg-transparent dark:hover:bg-indigo-900',
+  ghost: 'text-indigo-600 hover:bg-indigo-50 bg-transparent dark:text-indigo-400 dark:hover:bg-indigo-900',
+  danger: 'bg-red-600 hover:bg-red-700 text-white shadow-sm dark:bg-red-700 dark:hover:bg-red-600',
+  success: 'bg-green-600 hover:bg-green-700 text-white shadow-sm dark:bg-green-700 dark:hover:bg-green-600',
 };
 
 const sizes = {
@@ -33,7 +33,7 @@ const Button = ({
   const baseClasses = `
     inline-flex items-center justify-center font-medium rounded-lg
     transition-all duration-200
-    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800
     disabled:opacity-60 disabled:cursor-not-allowed
     ${fullWidth ? 'w-full' : ''}
   `;
@@ -49,7 +49,7 @@ const Button = ({
       {isLoading && (
         <LoadingSpinner 
           size="sm" 
-          color={variant === 'outline' || variant === 'ghost' ? 'primary' : 'white'} 
+          color={(variant === 'outline' || variant === 'ghost') ? 'primary' : 'white'} 
           className="mr-2"
         />
       )}
@@ -70,4 +70,4 @@ Button.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default Button; 
+export default Button;
