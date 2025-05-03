@@ -69,12 +69,12 @@ const Register = () => {
     <Container size="sm">
       <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center py-12">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
             Create your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
-            <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
               Sign in
             </Link>
           </p>
@@ -131,17 +131,17 @@ const Register = () => {
                   type="checkbox"
                   checked={formData.acceptTerms}
                   onChange={handleChange}
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700"
                 />
-                <label htmlFor="accept-terms" className="ml-2 block text-sm text-gray-900">
+                <label htmlFor="accept-terms" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
                   I accept the{' '}
-                  <Link to="/terms" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  <Link to="/terms" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
                     Terms and Conditions
                   </Link>
                 </label>
               </div>
               {errors.acceptTerms && (
-                <p className="mt-1 text-sm text-red-500">{errors.acceptTerms}</p>
+                <p className="mt-1 text-sm text-red-500 dark:text-red-400">{errors.acceptTerms}</p>
               )}
 
               <Button type="submit" fullWidth>
@@ -152,10 +152,10 @@ const Register = () => {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-gray-300 dark:border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                  <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with</span>
                 </div>
               </div>
 
@@ -180,4 +180,4 @@ const Register = () => {
   );
 };
 
-export default Register; 
+export default Register;

@@ -23,12 +23,12 @@ const Input = ({
 
   const getInputStyles = () => {
     if (error) {
-      return 'border-red-500 focus:border-red-500 focus:ring-red-500';
+      return 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:border-red-400 dark:focus:border-red-400 dark:focus:ring-red-400';
     }
     if (success) {
-      return 'border-green-500 focus:border-green-500 focus:ring-green-500';
+      return 'border-green-500 focus:border-green-500 focus:ring-green-500 dark:border-green-400 dark:focus:border-green-400 dark:focus:ring-green-400';
     }
-    return 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500';
+    return 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-indigo-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400';
   };
 
   return (
@@ -36,7 +36,7 @@ const Input = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
         >
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
@@ -51,7 +51,12 @@ const Input = ({
             ${sizes[size]}
             ${getInputStyles()}
             shadow-sm
-            disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed
+            bg-white dark:bg-gray-700 
+            text-gray-900 dark:text-gray-100
+            placeholder-gray-500 dark:placeholder-gray-400
+            disabled:bg-gray-50 dark:disabled:bg-gray-800 
+            disabled:text-gray-500 dark:disabled:text-gray-400 
+            disabled:cursor-not-allowed
             ${className}
           `}
           required={required}
@@ -73,7 +78,13 @@ const Input = ({
         )}
       </div>
       {(error || helperText || success) && (
-        <p className={`mt-1 text-sm ${error ? 'text-red-500' : success ? 'text-green-500' : 'text-gray-500'}`}>
+        <p className={`mt-1 text-sm ${
+          error 
+            ? 'text-red-500 dark:text-red-400' 
+            : success 
+              ? 'text-green-500 dark:text-green-400' 
+              : 'text-gray-500 dark:text-gray-400'
+        }`}>
           {error || helperText || (success && 'Valid input')}
         </p>
       )}
@@ -93,4 +104,4 @@ Input.propTypes = {
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
 };
 
-export default Input; 
+export default Input;

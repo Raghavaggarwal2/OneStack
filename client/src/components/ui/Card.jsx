@@ -9,8 +9,8 @@ const Card = ({
   onClick,
   ...props
 }) => {
-  const baseClasses = 'bg-white rounded-lg border border-gray-200';
-  const hoverClasses = hover ? 'transition-all duration-200 hover:shadow-lg hover:border-gray-300' : 'shadow-sm';
+  const baseClasses = 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg border border-gray-200 dark:border-gray-700';
+  const hoverClasses = hover ? 'transition-all duration-200 hover:shadow-lg hover:border-gray-300 dark:hover:border-gray-600' : 'shadow-sm';
   const paddingClasses = {
     none: '',
     sm: 'p-3',
@@ -44,4 +44,4 @@ Card.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default Card; 
+export default Card;

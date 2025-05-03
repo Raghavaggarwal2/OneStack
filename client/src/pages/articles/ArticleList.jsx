@@ -34,13 +34,13 @@ const ArticleList = () => {
   return (
     <div className="p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 space-y-4 md:space-y-0">
-        <h1 className="text-3xl font-bold text-gray-800">Articles</h1>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Articles</h1>
         <div className="flex space-x-4">
           <div className="relative">
             <input
               type="text"
               placeholder="Search articles..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="pl-10 pr-4 py-2 border dark:bg-gray-900 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <svg
               className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
@@ -56,7 +56,7 @@ const ArticleList = () => {
               />
             </svg>
           </div>
-          <select className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select className="px-4 py-2 border dark:bg-gray-900 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="">All Domains</option>
             <option value="web">Web Development</option>
             <option value="data">Data Science</option>
@@ -70,18 +70,18 @@ const ArticleList = () => {
           <Link
             key={article.id}
             to={`/articles/${article.id}`}
-            className="block bg-white rounded-lg shadow-md border border-gray-100 p-6 hover:shadow-lg transition duration-300"
+            className="block bg-white dark:bg-gray-900 rounded-lg shadow-md border border-gray-100 p-6 hover:shadow-lg transition duration-300"
           >
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">{article.title}</h2>
-                <p className="text-gray-600 mb-4">{article.excerpt}</p>
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">{article.title}</h2>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{article.excerpt}</p>
               </div>
               <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
                 {article.domain}
               </span>
             </div>
-            <div className="flex items-center justify-between text-sm text-gray-500">
+            <div className="flex items-center justify-between text-sm text-gray-400">
               <div className="flex items-center space-x-4">
                 <span>{article.author}</span>
                 <span>•</span>

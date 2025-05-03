@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const Profile = () => {
+  const { theme, toggleTheme } = useTheme();
+  
   const [profile, setProfile] = useState({
     name: 'John Doe',
     email: 'john@example.com',
@@ -11,7 +14,6 @@ const Profile = () => {
     preferences: {
       emailNotifications: true,
       weeklyDigest: true,
-      darkMode: false,
     },
   });
 
@@ -42,7 +44,7 @@ const Profile = () => {
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
-      <div className="rounded-lg bg-white p-6 shadow-lg">
+      <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-lg">
         <div className="flex items-center space-x-6">
           <img
             src={profile.avatar}
@@ -50,9 +52,9 @@ const Profile = () => {
             className="h-24 w-24 rounded-full"
           />
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{profile.name}</h1>
-            <p className="text-gray-600">{profile.email}</p>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{profile.name}</h1>
+            <p className="text-gray-600 dark:text-gray-400">{profile.email}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-500">
               Member since {new Date(profile.joinDate).toLocaleDateString()}
             </p>
           </div>
@@ -61,28 +63,28 @@ const Profile = () => {
 
       {/* Progress Stats */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        <div className="rounded-lg bg-white p-6 shadow-lg">
-          <h2 className="text-lg font-medium text-gray-900">Topics Completed</h2>
-          <p className="mt-2 text-3xl font-bold text-indigo-600">
+        <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-lg">
+          <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Topics Completed</h2>
+          <p className="mt-2 text-3xl font-bold text-indigo-600 dark:text-indigo-400">
             {profile.completedTopics}
           </p>
         </div>
 
-        <div className="rounded-lg bg-white p-6 shadow-lg">
-          <h2 className="text-lg font-medium text-gray-900">Articles Read</h2>
-          <p className="mt-2 text-3xl font-bold text-indigo-600">
+        <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-lg">
+          <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Articles Read</h2>
+          <p className="mt-2 text-3xl font-bold text-indigo-600 dark:text-indigo-400">
             {profile.totalArticlesRead}
           </p>
         </div>
       </div>
 
       {/* Settings */}
-      <div className="rounded-lg bg-white p-6 shadow-lg">
+      <div className="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-lg">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-medium text-gray-900">Settings</h2>
+          <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Settings</h2>
           <button
             onClick={() => setIsEditing(!isEditing)}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600"
           >
             {isEditing ? 'Cancel' : 'Edit'}
           </button>
@@ -98,9 +100,9 @@ const Profile = () => {
                   checked={formData.preferences.emailNotifications}
                   onChange={handleChange}
                   disabled={!isEditing}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <span className="text-gray-700">Email Notifications</span>
+                <span className="text-gray-700 dark:text-gray-300">Email Notifications</span>
               </label>
             </div>
 
@@ -112,23 +114,28 @@ const Profile = () => {
                   checked={formData.preferences.weeklyDigest}
                   onChange={handleChange}
                   disabled={!isEditing}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <span className="text-gray-700">Weekly Progress Digest</span>
+                <span className="text-gray-700 dark:text-gray-300">Weekly Progress Digest</span>
               </label>
             </div>
 
             <div>
               <label className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  name="darkMode"
-                  checked={formData.preferences.darkMode}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                <span className="text-gray-700">Dark Mode</span>
+                <span className="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                <button 
+                  type="button"
+                  onClick={toggleTheme} 
+                  className="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 dark:bg-gray-700 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  <span className="sr-only">Toggle dark mode</span>
+                  <span
+                    aria-hidden="true"
+                    className={`${
+                      theme === 'dark' ? 'translate-x-5' : 'translate-x-0'
+                    } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+                  />
+                </button>
               </label>
             </div>
           </div>
@@ -137,7 +144,7 @@ const Profile = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+                className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600"
               >
                 Save Changes
               </button>
@@ -149,4 +156,4 @@ const Profile = () => {
   );
 };
 
-export default Profile; 
+export default Profile;
