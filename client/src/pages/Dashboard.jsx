@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Grid, Section } from '../components/layout/index';
 import { Card, ProgressBar } from '../components/ui';
+import { Link } from 'react-router-dom';
+import { fetchHackerNews, estimateReadTime, determineDomain } from '../services/articleService';
 
 const StatCard = ({ title, value, icon: Icon, trend }) => (
   <Card className="relative overflow-hidden">
@@ -43,22 +45,25 @@ const RecommendedCard = ({ recommendations }) => (
     <h3 className="font-medium text-gray-900 dark:text-gray-100">Recommended for You</h3>
     <div className="mt-4 space-y-4">
       {recommendations.map((item, index) => (
-        <div key={index} className="p-3 rounded-lg bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 transition-colors cursor-pointer">
+        <Link 
+          to={`/articles/${item.id}`} 
+          key={index} 
+          className="p-3 rounded-lg bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer block"
+        >
           <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</h4>
           <p className="mt-1 text-xs text-gray-500">{item.description}</p>
           <div className="mt-2 flex items-center text-xs text-gray-500">
-            <span>{item.duration} min</span>
+            <span>{item.readTime}</span>
             <span className="mx-2">•</span>
-            <span>{item.difficulty}</span>
+            <span>{item.domain}</span>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   </Card>
 );
 
 const Dashboard = () => {
-  // Mock data - replace with real data from your API
   const stats = [
     { title: 'Learning Progress', value: '68%', icon: BookOpenIcon, trend: 12 },
     { title: 'Active Domains', value: '5', icon: CubeIcon, trend: -2 },
@@ -72,39 +77,67 @@ const Dashboard = () => {
     { type: 'completed', title: 'Completed Git Fundamentals', time: '1 day ago' },
   ];
 
-  const recommendations = [
-    {
-      title: 'Understanding React Hooks',
-      description: 'Learn how to use React Hooks effectively',
-      duration: 45,
-      difficulty: 'Intermediate',
-    },
-    {
-      title: 'TypeScript Fundamentals',
-      description: 'Get started with TypeScript in your projects',
-      duration: 30,
-      difficulty: 'Beginner',
-    },
-    {
-      title: 'Advanced State Management',
-      description: 'Deep dive into Redux and Context API',
-      duration: 60,
-      difficulty: 'Advanced',
-    },
-  ];
+  const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      try {
+        const recommendationData = await fetchHackerNews(5);
+        
+        const formattedRecommendations = recommendationData
+          .filter(item => item && item.title)
+          .map(item => ({
+            id: item.id,
+            title: item.title,
+            description: item.excerpt || 'Check out this interesting tech article',
+            readTime: item.readTime,
+            domain: item.domain,
+            difficulty: ['Beginner', 'Intermediate', 'Advanced'][Math.floor(Math.random() * 3)],
+            duration: Math.floor(Math.random() * 30) + 15,
+          }));
+        
+        setRecommendations(formattedRecommendations);
+      } catch (err) {
+        console.error('Error fetching recommendations:', err);
+        setRecommendations([
+          {
+            title: 'Understanding React Hooks',
+            description: 'Learn how to use React Hooks effectively',
+            readTime: '5 min',
+            domain: 'Intermediate',
+          },
+          {
+            title: 'TypeScript Fundamentals',
+            description: 'Get started with TypeScript in your projects',
+            readTime: '10 min',
+            domain: 'Beginner',
+          },
+          {
+            title: 'Advanced State Management',
+            description: 'Deep dive into Redux and Context API',
+            readTime: '15 min',
+            domain: 'Advanced',
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecommendations();
+  }, []);
 
   return (
     <Container>
       <Section title="Dashboard" description="Track your learning progress and explore recommended content">
         <div className="space-y-6">
-          {/* Stats Grid */}
           <Grid cols={{ base: 1, sm: 2, lg: 4 }} gap={6}>
             {stats.map((stat, index) => (
               <StatCard key={index} {...stat} />
             ))}
           </Grid>
 
-          {/* Learning Progress */}
           <Card className="p-6">
             <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Overall Progress</h3>
             <ProgressBar
@@ -130,10 +163,9 @@ const Dashboard = () => {
             </Grid>
           </Card>
 
-          {/* Two Column Layout */}
           <Grid cols={{ base: 1, lg: 2 }} gap={6}>
             <RecentActivityCard activity={recentActivity} />
-            <RecommendedCard recommendations={recommendations} />
+            <RecommendedCard recommendations={loading ? [] : recommendations} />
           </Grid>
         </div>
       </Section>
@@ -141,7 +173,6 @@ const Dashboard = () => {
   );
 };
 
-// Icons (using Heroicons)
 const BookOpenIcon = (props) => (
   <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -166,4 +197,4 @@ const ClockIcon = (props) => (
   </svg>
 );
 
-export default Dashboard; 
+export default Dashboard;
