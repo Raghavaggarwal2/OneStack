@@ -1,0 +1,63 @@
+const mongoose = require('mongoose');
+const { isEmail } = require('validator');
+
+// Define the schema without unique: true initially to avoid complications
+const userSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: [true, 'First name is required'],
+    trim: true
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Last name is required'],
+    trim: true
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    lowercase: true,
+    trim: true,
+    validate: [isEmail, 'Please enter a valid email']
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    minlength: [10, 'Password must be at least 10 characters long']
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+// Remove password from json responses
+userSchema.methods.toJSON = function() {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
+
+// Create the model
+const User = mongoose.model('User', userSchema);
+
+// Function to ensure email uniqueness without using MongoDB's unique index
+// This avoids the 11000 error completely by doing a manual check
+User.createUser = async function(userData) {
+  try {
+    // Check if user exists
+    const existingUser = await this.findOne({ email: userData.email });
+    if (existingUser) {
+      throw new Error('Email already exists');
+    }
+    
+    // Create user
+    const user = new this(userData);
+    await user.save();
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = User;

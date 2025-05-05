@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, createRoutesFromElements } from 'react-router-dom';
 import BaseLayout from './components/layout/BaseLayout';
 
 // Pages
