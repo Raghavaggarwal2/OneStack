@@ -6,6 +6,9 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Domain from './pages/Domain';
+import ArticleDetail from './pages/articles/ArticleDetail';
+import DomainExplorer from './pages/domains/DomainExplorer';
+import ArticleList from './pages/articles/ArticleList';
 
 // Domain Pages
 import DSA from './pages/domains/DSA';
@@ -57,6 +60,9 @@ function App() {
         <Route path="domain/web-3" element={<Web3 />} />
         <Route path="domain/iot" element={<IoT />} />
         <Route path="domain/vlsi" element={<VLSI />} />
+        <Route path="articles" element={<ArticleList />} />
+        <Route path="articles/:id" element={<ArticleDetail />} />
+        <Route path="domains" element={<DomainExplorer />} />
       </Route>
     </Routes>
   );
