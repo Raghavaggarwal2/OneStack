@@ -1,7 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 import BaseLayout from './components/layout/BaseLayout';
 import { AIProviderProvider } from './context/AIProviderContext';
 import ChatBot from './components/chatbot/ChatBot';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
 import Dashboard from './pages/Dashboard';
@@ -32,44 +34,62 @@ import Web3 from './pages/domains/Web3';
 import IoT from './pages/domains/IoT';
 import VLSI from './pages/domains/VLSI';
 
+// Root redirect component
+const RootRedirect = () => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
+};
+
 function App() {
   return (
     <AIProviderProvider>
       <Routes>
         <Route path="/" element={<BaseLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<RootRedirect />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           
-          {/* Domain routes */}
-          <Route path="domains" element={<Domain />} />
+          {/* Protected Routes */}
+          <Route path="dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
           
-          {/* Individual domain routes */}
-          <Route path="domain/dsa" element={<DSA />} />
-          <Route path="domain/aptitude" element={<Aptitude />} />
-          <Route path="domain/data-science" element={<DataScience />} />
-          <Route path="domain/genai" element={<GenAI />} />
-          <Route path="domain/aiml" element={<AIML />} />
-          <Route path="domain/devops" element={<DevOps />} />
-          <Route path="domain/cloud-computing" element={<CloudComputing />} />
-          <Route path="domain/blockchain" element={<Blockchain />} />
-          <Route path="domain/cyber-security" element={<CyberSecurity />} />
-          <Route path="domain/android-dev" element={<AndroidDev />} />
-          <Route path="domain/ios-dev" element={<IOSDev />} />
-          <Route path="domain/web-dev" element={<WebDev />} />
-          <Route path="domain/game-dev" element={<GameDev />} />
-          <Route path="domain/ui-ux" element={<UIUX />} />
-          <Route path="domain/ethical-hacking" element={<EthicalHacking />} />
-          <Route path="domain/web-3" element={<Web3 />} />
-          <Route path="domain/iot" element={<IoT />} />
-          <Route path="domain/vlsi" element={<VLSI />} />
-          <Route path="articles" element={<ArticleList />} />
-          <Route path="articles/:id" element={<ArticleDetail />} />
-          <Route path="domains" element={<DomainExplorer />} />
+          {/* Protected Domain routes */}
+          <Route path="domains" element={
+            <ProtectedRoute>
+              <Domain />
+            </ProtectedRoute>
+          } />
+          
+          {/* Protected Individual domain routes */}
+          <Route path="domain/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
+          <Route path="domain/aptitude" element={<ProtectedRoute><Aptitude /></ProtectedRoute>} />
+          <Route path="domain/data-science" element={<ProtectedRoute><DataScience /></ProtectedRoute>} />
+          <Route path="domain/genai" element={<ProtectedRoute><GenAI /></ProtectedRoute>} />
+          <Route path="domain/aiml" element={<ProtectedRoute><AIML /></ProtectedRoute>} />
+          <Route path="domain/devops" element={<ProtectedRoute><DevOps /></ProtectedRoute>} />
+          <Route path="domain/cloud-computing" element={<ProtectedRoute><CloudComputing /></ProtectedRoute>} />
+          <Route path="domain/blockchain" element={<ProtectedRoute><Blockchain /></ProtectedRoute>} />
+          <Route path="domain/cyber-security" element={<ProtectedRoute><CyberSecurity /></ProtectedRoute>} />
+          <Route path="domain/android-dev" element={<ProtectedRoute><AndroidDev /></ProtectedRoute>} />
+          <Route path="domain/ios-dev" element={<ProtectedRoute><IOSDev /></ProtectedRoute>} />
+          <Route path="domain/web-dev" element={<ProtectedRoute><WebDev /></ProtectedRoute>} />
+          <Route path="domain/game-dev" element={<ProtectedRoute><GameDev /></ProtectedRoute>} />
+          <Route path="domain/ui-ux" element={<ProtectedRoute><UIUX /></ProtectedRoute>} />
+          <Route path="domain/ethical-hacking" element={<ProtectedRoute><EthicalHacking /></ProtectedRoute>} />
+          <Route path="domain/web-3" element={<ProtectedRoute><Web3 /></ProtectedRoute>} />
+          <Route path="domain/iot" element={<ProtectedRoute><IoT /></ProtectedRoute>} />
+          <Route path="domain/vlsi" element={<ProtectedRoute><VLSI /></ProtectedRoute>} />
+          
+          {/* Protected Article routes */}
+          <Route path="articles" element={<ProtectedRoute><ArticleList /></ProtectedRoute>} />
+          <Route path="articles/:id" element={<ProtectedRoute><ArticleDetail /></ProtectedRoute>} />
+          <Route path="domains" element={<ProtectedRoute><DomainExplorer /></ProtectedRoute>} />
         </Route>
       </Routes>
       
-      {/* ChatBot is outside the routes so it appears on all pages */}
       <ChatBot />
     </AIProviderProvider>
   );

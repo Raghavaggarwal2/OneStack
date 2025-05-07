@@ -1,6 +1,20 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 
+const domainProgressSchema = new mongoose.Schema({
+  domainId: String,
+  domainName: String,
+  totalTopics: Number,
+  completedTopics: Number,
+  lastUpdated: Date,
+  topics: [{
+    id: Number,
+    name: String,
+    completed: Boolean,
+    completedAt: Date
+  }]
+});
+
 // Define the schema without unique: true initially to avoid complications
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -24,6 +38,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Password is required'],
     minlength: [10, 'Password must be at least 10 characters long']
+  },
+  domainProgress: [domainProgressSchema],
+  totalTopicsCompleted: {
+    type: Number,
+    default: 0
   },
   createdAt: {
     type: Date,

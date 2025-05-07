@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import ProgressBar from '../../components/ProgressBar';
 import TopicChecklist from '../../components/TopicChecklist';
-import { loadDomainProgress, saveDomainProgress } from '../../utils/progressUtils';
+import useDomainProgress from '../../hooks/useDomainProgress';
 
 // Domain-specific data
 const domainName = "Web Dev";
-const domainColor = "bg-teal-500"; // From domainColors in domainList.js
+const domainColor = "bg-teal-500";
 
-// Sample topics for this domain
+// Default topics for this domain
 const defaultTopics = [
   { id: 1, name: "Responsive Design", completed: false },
   { id: 2, name: "RESTful APIs", completed: false },
@@ -25,26 +26,26 @@ const defaultTopics = [
 ];
 
 const WebDev = () => {
-  const [progress, setProgress] = useState(0);
-  const [topics, setTopics] = useState(defaultTopics);
-  
-  // Load saved progress on component mount
-  useEffect(() => {
-    const savedTopics = loadDomainProgress(domainName, defaultTopics);
-    setTopics(savedTopics);
-    
-    // Calculate initial progress
-    const completedCount = savedTopics.filter(topic => topic.completed).length;
-    setProgress(Math.round((completedCount / savedTopics.length) * 100));
-  }, []);
-  
-  // Handler for progress updates from TopicChecklist
-  const handleProgressChange = (newProgress) => {
-    setProgress(newProgress);
-  };
+  const {
+    topics,
+    progress,
+    loading,
+    updateTopics,
+    handleProgressChange
+  } = useDomainProgress(domainName, defaultTopics);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Toaster />
+      
       {/* Back button */}
       <div className="mb-4">
         <Link 
@@ -74,14 +75,10 @@ const WebDev = () => {
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-3">Tech Stack</h2>
           <div className="flex flex-wrap gap-2">
-            {/* Tech stack tags */}
             <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">HTML</span>
             <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">CSS</span>
             <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">JavaScript</span>
             <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">React</span>
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Node.js</span>
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Express</span>
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">MongoDB</span>
           </div>
         </div>
         
@@ -100,6 +97,7 @@ const WebDev = () => {
           topics={topics} 
           domainName={domainName} 
           onProgressChange={handleProgressChange} 
+          onTopicsUpdate={updateTopics}
         />
       </div>
       
@@ -117,43 +115,14 @@ const WebDev = () => {
             className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+              <path fillRule="evenodd" d="M4.25 2A2.25 2.25 0 002 4.25v11.5A2.25 2.25 0 004.25 18h11.5A2.25 2.25 0 0015.75 2H4.25zM6 13.25V7h8v6.25a.75.75 0 01-1.5 0V8.5h-5v4.75a.75.75 0 01-1.5 0z" clipRule="evenodd" />
             </svg>
-            MDN Web Docs - Comprehensive Web Development Resources
+            MDN Web Docs
           </a>
-        </div>
-        
-        {/* YouTube resources */}
-        <div>
-          <h3 className="text-lg font-medium mb-2">Video Tutorials</h3>
-          <div className="space-y-2">
-            <a 
-              href="https://www.youtube.com/watch?v=nu_pCVPKzTk" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1 text-red-600">
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-              </svg>
-              Full Stack Web Development Course - HTML, CSS, JavaScript
-            </a>
-            <a 
-              href="https://www.youtube.com/watch?v=w7ejDZ8SWv8" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1 text-red-600">
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-              </svg>
-              React JavaScript Framework Crash Course
-            </a>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default WebDev; 
+export default WebDev;

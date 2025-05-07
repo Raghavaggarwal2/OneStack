@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Register = () => {
@@ -14,14 +14,16 @@ const Register = () => {
   const [error, setError] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
   const { register, isAuthenticated } = useAuth();
 
   // If already authenticated, redirect to dashboard
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      const destination = location.state?.from?.pathname || '/dashboard';
+      navigate(destination);
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, location]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,40 +68,26 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
     setLoading(true);
     setError('');
     
-    const userData = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      password: formData.password
-    };
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
     
     try {
-      const result = await register(userData);
+      const result = await register(formData);
       
       if (!result.success) {
         if (result.errors) {
-          // Handle validation errors from the server
-          const fieldErrors = {};
-          result.errors.forEach(err => {
-            fieldErrors[err.param] = err.msg;
-          });
-          setErrors(fieldErrors);
-          throw new Error('Please correct the errors in the form');
+          setErrors(result.errors);
         } else {
           throw new Error(result.error);
         }
       }
       
-      // Redirect to dashboard
-      navigate('/');
+      // Redirect will happen in useEffect
     } catch (err) {
       setError(err.message);
     } finally {

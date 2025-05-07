@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const domainRoutes = require('./routes/domainRoutes');
 const mongoose = require('mongoose');
 
 // Load env vars
@@ -19,6 +20,7 @@ app.use(cors());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/domains', domainRoutes);
 
 // Health check route
 app.get('/', (req, res) => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
@@ -10,14 +10,16 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, isAuthenticated } = useAuth();
 
   // If already authenticated, redirect to dashboard
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      const destination = location.state?.from?.pathname || '/dashboard';
+      navigate(destination);
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, location]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,8 +38,7 @@ const Login = () => {
         throw new Error(result.error);
       }
       
-      // Redirect to dashboard
-      navigate('/');
+      // Redirect will happen in useEffect
     } catch (err) {
       setError(err.message);
     } finally {
