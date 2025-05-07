@@ -1,5 +1,7 @@
-import { Routes, Route, createRoutesFromElements } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import BaseLayout from './components/layout/BaseLayout';
+import { AIProviderProvider } from './context/AIProviderContext';
+import ChatBot from './components/chatbot/ChatBot';
 
 // Pages
 import Dashboard from './pages/Dashboard';
@@ -32,39 +34,44 @@ import VLSI from './pages/domains/VLSI';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<BaseLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        
-        {/* Domain routes */}
-        <Route path="domains" element={<Domain />} />
-        
-        {/* Individual domain routes */}
-        <Route path="domain/dsa" element={<DSA />} />
-        <Route path="domain/aptitude" element={<Aptitude />} />
-        <Route path="domain/data-science" element={<DataScience />} />
-        <Route path="domain/genai" element={<GenAI />} />
-        <Route path="domain/aiml" element={<AIML />} />
-        <Route path="domain/devops" element={<DevOps />} />
-        <Route path="domain/cloud-computing" element={<CloudComputing />} />
-        <Route path="domain/blockchain" element={<Blockchain />} />
-        <Route path="domain/cyber-security" element={<CyberSecurity />} />
-        <Route path="domain/android-dev" element={<AndroidDev />} />
-        <Route path="domain/ios-dev" element={<IOSDev />} />
-        <Route path="domain/web-dev" element={<WebDev />} />
-        <Route path="domain/game-dev" element={<GameDev />} />
-        <Route path="domain/ui-ux" element={<UIUX />} />
-        <Route path="domain/ethical-hacking" element={<EthicalHacking />} />
-        <Route path="domain/web-3" element={<Web3 />} />
-        <Route path="domain/iot" element={<IoT />} />
-        <Route path="domain/vlsi" element={<VLSI />} />
-        <Route path="articles" element={<ArticleList />} />
-        <Route path="articles/:id" element={<ArticleDetail />} />
-        <Route path="domains" element={<DomainExplorer />} />
-      </Route>
-    </Routes>
+    <AIProviderProvider>
+      <Routes>
+        <Route path="/" element={<BaseLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          
+          {/* Domain routes */}
+          <Route path="domains" element={<Domain />} />
+          
+          {/* Individual domain routes */}
+          <Route path="domain/dsa" element={<DSA />} />
+          <Route path="domain/aptitude" element={<Aptitude />} />
+          <Route path="domain/data-science" element={<DataScience />} />
+          <Route path="domain/genai" element={<GenAI />} />
+          <Route path="domain/aiml" element={<AIML />} />
+          <Route path="domain/devops" element={<DevOps />} />
+          <Route path="domain/cloud-computing" element={<CloudComputing />} />
+          <Route path="domain/blockchain" element={<Blockchain />} />
+          <Route path="domain/cyber-security" element={<CyberSecurity />} />
+          <Route path="domain/android-dev" element={<AndroidDev />} />
+          <Route path="domain/ios-dev" element={<IOSDev />} />
+          <Route path="domain/web-dev" element={<WebDev />} />
+          <Route path="domain/game-dev" element={<GameDev />} />
+          <Route path="domain/ui-ux" element={<UIUX />} />
+          <Route path="domain/ethical-hacking" element={<EthicalHacking />} />
+          <Route path="domain/web-3" element={<Web3 />} />
+          <Route path="domain/iot" element={<IoT />} />
+          <Route path="domain/vlsi" element={<VLSI />} />
+          <Route path="articles" element={<ArticleList />} />
+          <Route path="articles/:id" element={<ArticleDetail />} />
+          <Route path="domains" element={<DomainExplorer />} />
+        </Route>
+      </Routes>
+      
+      {/* ChatBot is outside the routes so it appears on all pages */}
+      <ChatBot />
+    </AIProviderProvider>
   );
 }
 

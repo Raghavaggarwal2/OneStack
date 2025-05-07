@@ -43,21 +43,23 @@ const RecentActivityCard = ({ activity }) => (
 const RecommendedCard = ({ recommendations }) => (
   <Card className="p-4">
     <h3 className="font-medium text-gray-900 dark:text-gray-100">Recommended for You</h3>
-    <div className="mt-4 space-y-4">
+    <div className="mt-4 space-y-3">
       {recommendations.map((item, index) => (
-        <Link 
-          to={`/articles/${item.id}`} 
+        <a 
+          href={item.url || `https://news.ycombinator.com/item?id=${item.id}`} 
+          target="_blank"
+          rel="noopener noreferrer"
           key={index} 
-          className="p-3 rounded-lg bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer block"
+          className="p-2.5 rounded-lg bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer block"
         >
-          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</h4>
-          <p className="mt-1 text-xs text-gray-500">{item.description}</p>
+          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{item.title}</h4>
+          <p className="mt-1 text-xs text-gray-500 truncate">{item.description}</p>
           <div className="mt-2 flex items-center text-xs text-gray-500">
             <span>{item.readTime}</span>
             <span className="mx-2">•</span>
-            <span>{item.domain}</span>
+            <span className="truncate">{item.domain}</span>
           </div>
-        </Link>
+        </a>
       ))}
     </div>
   </Card>
@@ -90,6 +92,7 @@ const Dashboard = () => {
           .map(item => ({
             id: item.id,
             title: item.title,
+            url: item.url,
             description: item.excerpt || 'Check out this interesting tech article',
             readTime: item.readTime,
             domain: item.domain,
@@ -105,19 +108,22 @@ const Dashboard = () => {
             title: 'Understanding React Hooks',
             description: 'Learn how to use React Hooks effectively',
             readTime: '5 min',
-            domain: 'Intermediate',
+            domain: 'reactjs.org',
+            url: 'https://reactjs.org/docs/hooks-intro.html',
           },
           {
             title: 'TypeScript Fundamentals',
             description: 'Get started with TypeScript in your projects',
             readTime: '10 min',
-            domain: 'Beginner',
+            domain: 'typescriptlang.org',
+            url: 'https://www.typescriptlang.org/docs/',
           },
           {
             title: 'Advanced State Management',
             description: 'Deep dive into Redux and Context API',
             readTime: '15 min',
-            domain: 'Advanced',
+            domain: 'redux.js.org',
+            url: 'https://redux.js.org/',
           },
         ]);
       } finally {
