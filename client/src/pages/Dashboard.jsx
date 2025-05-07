@@ -4,66 +4,121 @@ import { getAllDomainsProgress } from '../services/domainService';
 import { Card } from '../components/ui';
 import ProgressBar from '../components/ui/ProgressBar';
 import { BookOpenIcon, CubeIcon, DocumentTextIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 const StatCard = ({ title, value, icon: Icon, trend }) => (
-  <Card className="p-4">
-    <div className="flex items-center">
-      <div className="flex-1">
-        <p className="text-sm text-gray-500">{title}</p>
-        <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{value}</p>
-      </div>
-      {Icon && (
-        <div className="p-3 bg-indigo-50 rounded-full">
-          <Icon className="w-6 h-6 text-indigo-600" />
+  <motion.div
+    whileHover={{ scale: 1.02 }}
+    transition={{ type: "spring", stiffness: 300 }}
+  >
+    <Card className="p-4">
+      <div className="flex items-center">
+        <div className="flex-1">
+          <p className="text-sm text-gray-500">{title}</p>
+          <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{value}</p>
         </div>
+        {Icon && (
+          <div className="p-3 bg-indigo-50 rounded-full">
+            <Icon className="w-6 h-6 text-indigo-600" />
+          </div>
+        )}
+      </div>
+      {trend && (
+        <p className={`mt-2 text-sm ${trend > 0 ? 'text-green-600' : 'text-red-600'}`}>
+          {trend > 0 ? '↑' : '↓'} {Math.abs(trend)}% from last month
+        </p>
       )}
-    </div>
-    {trend && (
-      <p className={`mt-2 text-sm ${trend > 0 ? 'text-green-600' : 'text-red-600'}`}>
-        {trend > 0 ? '↑' : '↓'} {Math.abs(trend)}% from last month
-      </p>
-    )}
-  </Card>
+    </Card>
+  </motion.div>
 );
 
 const RecentActivityCard = ({ activity }) => (
-  <Card className="p-4">
-    <h3 className="font-medium text-gray-900 dark:text-gray-100">Recent Activity</h3>
-    <div className="mt-4 space-y-4">
-      {activity.map((item, index) => (
-        <div key={index} className="flex items-start space-x-3">
-          <div className="flex-shrink-0">
-            <div className={`w-2 h-2 mt-2 rounded-full ${item.type === 'completed' ? 'bg-green-500' : 'bg-indigo-500'}`} />
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    <Card className="p-4">
+      <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Activity</h3>
+      <div className="mt-4 space-y-4">
+        {activity.map((item, index) => (
+          <div key={index} className="flex items-start space-x-3">
+            <div className="flex-shrink-0">
+              <div className={`w-2 h-2 mt-2 rounded-full ${item.type === 'completed' ? 'bg-green-500' : 'bg-indigo-500'}`} />
+            </div>
+            <div>
+              <p className="text-sm text-gray-900 dark:text-gray-100">{item.title}</p>
+              <p className="text-xs text-gray-500">{item.time}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm text-gray-900 dark:text-gray-100">{item.title}</p>
-            <p className="text-xs text-gray-500">{item.time}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </Card>
+        ))}
+      </div>
+    </Card>
+  </motion.div>
+);
+
+const RecommendedArticles = ({ articles }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+  >
+    <Card className="p-4 bg-blue-50 dark:bg-blue-900">
+      <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Recommended Articles</h3>
+      <div className="space-y-3">
+        {articles.map((article, index) => (
+          <a 
+            key={index}
+            href={article.url}
+            className="block p-3 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-150"
+          >
+            <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{article.title}</p>
+            <p className="text-xs text-gray-500 mt-1">Domain: {article.domain}</p>
+          </a>
+        ))}
+      </div>
+    </Card>
+  </motion.div>
 );
 
 const Dashboard = () => {
   const [domainsProgress, setDomainsProgress] = useState([]);
   const [totalTopicsCompleted, setTotalTopicsCompleted] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [recommendedArticles, setRecommendedArticles] = useState([]);
 
   useEffect(() => {
-    const fetchProgress = async () => {
+    const fetchData = async () => {
       try {
+        // Fetch domains progress
         const { domainsProgress, totalTopicsCompleted } = await getAllDomainsProgress();
         setDomainsProgress(domainsProgress);
         setTotalTopicsCompleted(totalTopicsCompleted);
+        
+        // Mock recent activity - replace with actual API call
+        setRecentActivity([
+          { type: 'completed', title: 'Completed React Hooks in Web Dev', time: '2 hours ago' },
+          { type: 'started', title: 'Started Docker in DevOps', time: '4 hours ago' },
+          { type: 'completed', title: 'Completed Data Structures in DSA', time: '1 day ago' },
+        ]);
+        
+        // Mock recommended articles - replace with actual API call
+        setRecommendedArticles([
+          { title: 'Mastering React Hooks', domain: 'Web Dev', url: '#' },
+          { title: 'Introduction to Docker', domain: 'DevOps', url: '#' },
+          { title: 'Understanding Data Structures', domain: 'DSA', url: '#' },
+        ]);
       } catch (error) {
-        console.error('Error fetching progress:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProgress();
+    fetchData();
   }, []);
 
   // Calculate overall progress
@@ -132,28 +187,41 @@ const Dashboard = () => {
             ))}
           </Grid>
 
-          <Card className="p-6">
-            <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Overall Progress</h3>
-            <ProgressBar
-              progress={calculateOverallProgress()}
-              size="lg"
-              color="primary"
-              label="Learning Progress"
-              className="mb-6"
-            />
-            <Grid cols={{ base: 1, md: 3 }} gap={4}>
-              {getTopDomains().map((domain, index) => (
-                <div key={index}>
-                  <h4 className="text-sm font-medium text-gray-500 mb-2">{domain.domainName}</h4>
-                  <ProgressBar 
-                    progress={Math.round((domain.completedTopics / domain.totalTopics) * 100)} 
-                    size="sm" 
-                    color={index === 0 ? 'success' : index === 1 ? 'warning' : 'secondary'} 
-                  />
-                </div>
-              ))}
-            </Grid>
-          </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Overall Progress Card */}
+            <Card className="p-6 lg:col-span-2">
+              <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Domain Progress</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {getTopDomains().map((domain, index) => (
+                  <motion.div 
+                    key={index}
+                    whileHover={{ scale: 1.02 }}
+                    className="flex flex-col items-center"
+                  >
+                    <div className="w-24 h-24 mb-3">
+                      <CircularProgressbar
+                        value={Math.round((domain.completedTopics / domain.totalTopics) * 100)}
+                        text={`${Math.round((domain.completedTopics / domain.totalTopics) * 100)}%`}
+                        styles={buildStyles({
+                          pathColor: index === 0 ? '#10B981' : index === 1 ? '#F59E0B' : '#6366F1',
+                          textColor: 'gray',
+                          trailColor: '#E5E7EB',
+                        })}
+                      />
+                    </div>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">{domain.domainName}</h4>
+                    <p className="text-xs text-gray-500">{domain.completedTopics}/{domain.totalTopics} topics</p>
+                  </motion.div>
+                ))}
+              </div>
+            </Card>
+
+            {/* Recent Activity */}
+            <RecentActivityCard activity={recentActivity} />
+          </div>
+
+          {/* Recommended Articles */}
+          <RecommendedArticles articles={recommendedArticles} />
         </div>
       </Section>
     </Container>
