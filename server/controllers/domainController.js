@@ -4,19 +4,28 @@ const User = require('../models/User');
 const updateDomainProgress = async (req, res) => {
   try {
     const { domainId, domainName, topics } = req.body;
-    const userId = req.user.id; // From auth middleware
+    const userId = req.user.id;
 
-    const completedTopics = topics.filter(topic => topic.completed).length;
+    // Add completedAt timestamp for newly completed topics
+    const now = new Date();
+    const updatedTopics = topics.map(topic => {
+      if (topic.completed && !topic.completedAt) {
+        return { ...topic, completedAt: now };
+      }
+      return topic;
+    });
+
+    const completedTopics = updatedTopics.filter(topic => topic.completed).length;
 
     const update = {
       $set: {
         'domainProgress.$[elem]': {
           domainId,
           domainName,
-          totalTopics: topics.length,
+          totalTopics: updatedTopics.length,
           completedTopics,
-          lastUpdated: new Date(),
-          topics
+          lastUpdated: now,
+          topics: updatedTopics
         }
       }
     };
@@ -38,10 +47,10 @@ const updateDomainProgress = async (req, res) => {
             domainProgress: {
               domainId,
               domainName,
-              totalTopics: topics.length,
+              totalTopics: updatedTopics.length,
               completedTopics,
-              lastUpdated: new Date(),
-              topics
+              lastUpdated: now,
+              topics: updatedTopics
             }
           }
         },
@@ -95,7 +104,15 @@ const getDomainProgress = async (req, res) => {
     const user = await User.findById(userId);
     const domainProgress = user.domainProgress.find(
       d => d.domainId === domainId
-    ) || null;
+    );
+
+    // For new users or domains without progress, return null
+    if (!domainProgress) {
+      return res.json({
+        success: true,
+        domainProgress: null
+      });
+    }
 
     res.json({
       success: true,
@@ -132,8 +149,48 @@ const getAllDomainsProgress = async (req, res) => {
   }
 };
 
+// Get recent domain activity for a user
+const getRecentActivity = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    // Get all domain progress entries and flatten topics
+    const recentActivity = user.domainProgress
+      .reduce((activities, domain) => {
+        const domainTopics = domain.topics
+          .filter(topic => topic.completed)
+          .map(topic => ({
+            type: 'completed',
+            title: `Completed ${topic.name} in ${domain.domainName}`,
+            time: topic.completedAt || new Date(),
+            domainId: domain.domainId,
+            topicId: topic.id
+          }));
+        return [...activities, ...domainTopics];
+      }, [])
+      // Sort by completion time, most recent first
+      .sort((a, b) => new Date(b.time) - new Date(a.time))
+      // Take only the last 5 completed topics
+      .slice(0, 5);
+
+    res.json({
+      success: true,
+      recentActivity
+    });
+
+  } catch (error) {
+    console.error('Error fetching recent activity:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to fetch recent activity' 
+    });
+  }
+};
+
 module.exports = {
   updateDomainProgress,
   getDomainProgress,
-  getAllDomainsProgress
+  getAllDomainsProgress,
+  getRecentActivity
 };

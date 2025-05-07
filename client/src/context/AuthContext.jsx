@@ -94,7 +94,6 @@ export const AuthProvider = ({ children }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Add Authorization header with token if needed
           ...(user?.token ? { Authorization: `Bearer ${user.token}` } : {})
         }
       });
@@ -103,8 +102,13 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      // Always clean up local state and storage
-      localStorage.removeItem('user');
+      // Clear all localStorage data
+      Object.keys(localStorage).forEach(key => {
+        // Clear domain progress and user data
+        if (key.startsWith('domain_') || key === 'user') {
+          localStorage.removeItem(key);
+        }
+      });
       setUser(null);
     }
   };
@@ -121,4 +125,4 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export default AuthContext; 
+export default AuthContext;

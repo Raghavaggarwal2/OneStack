@@ -4,6 +4,16 @@ import { updateDomainProgress } from '../services/domainService';
 const TopicChecklist = ({ topics: initialTopics, domainName, onProgressChange }) => {
   const [topics, setTopics] = useState(initialTopics);
 
+  // Initialize or clear progress when component mounts
+  useEffect(() => {
+    const key = `domain_${domainName.replace(/\s+/g, '_').toLowerCase()}`;
+    localStorage.removeItem(key); // Clear any existing data
+    setTopics(initialTopics.map(topic => ({ ...topic, completed: false })));
+    if (onProgressChange) {
+      onProgressChange(0);
+    }
+  }, [domainName]);
+
   // Update parent component with progress whenever checked topics change
   useEffect(() => {
     if (onProgressChange) {
@@ -24,32 +34,26 @@ const TopicChecklist = ({ topics: initialTopics, domainName, onProgressChange })
       // Sync with backend
       const domainId = domainName.toLowerCase().replace(/\s+/g, '-');
       await updateDomainProgress(domainId, domainName, updatedTopics);
-      
-      // Update localStorage as fallback
-      const key = `domain_${domainName.replace(/\s+/g, '_').toLowerCase()}`;
-      localStorage.setItem(key, JSON.stringify(updatedTopics));
     } catch (error) {
-      console.error('Error syncing progress:', error);
-      // Revert changes if sync fails
-      setTopics(topics);
+      console.error('Error updating progress:', error);
     }
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <h2 className="text-xl font-semibold mb-4">Topics</h2>
-      {topics.map(topic => (
+      {topics.map((topic) => (
         <div key={topic.id} className="flex items-center">
           <input
             type="checkbox"
             id={`topic-${topic.id}`}
             checked={topic.completed}
             onChange={() => handleCheckboxChange(topic.id)}
-            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700"
           />
           <label
             htmlFor={`topic-${topic.id}`}
-            className="ml-3 text-gray-700 dark:text-gray-300 cursor-pointer"
+            className="ml-3 block text-gray-700 dark:text-gray-300"
           >
             {topic.name}
           </label>

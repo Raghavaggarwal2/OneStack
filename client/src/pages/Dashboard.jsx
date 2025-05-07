@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Section, Grid } from '../components/layout';
-import { getAllDomainsProgress } from '../services/domainService';
+import { getAllDomainsProgress, getRecentActivity } from '../services/domainService';
 import { Card } from '../components/ui';
 import ProgressBar from '../components/ui/ProgressBar';
 import { BookOpenIcon, CubeIcon, DocumentTextIcon, ClockIcon } from '@heroicons/react/24/outline';
@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-const StatCard = ({ title, value, icon: Icon, trend }) => (
+const StatCard = ({ title, value, icon: Icon }) => (
   <motion.div
     whileHover={{ scale: 1.02 }}
     transition={{ type: "spring", stiffness: 300 }}
@@ -25,11 +25,6 @@ const StatCard = ({ title, value, icon: Icon, trend }) => (
           </div>
         )}
       </div>
-      {trend && (
-        <p className={`mt-2 text-sm ${trend > 0 ? 'text-green-600' : 'text-red-600'}`}>
-          {trend > 0 ? '↑' : '↓'} {Math.abs(trend)}% from last month
-        </p>
-      )}
     </Card>
   </motion.div>
 );
@@ -43,17 +38,23 @@ const RecentActivityCard = ({ activity }) => (
     <Card className="p-4">
       <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Activity</h3>
       <div className="mt-4 space-y-4">
-        {activity.map((item, index) => (
-          <div key={index} className="flex items-start space-x-3">
-            <div className="flex-shrink-0">
-              <div className={`w-2 h-2 mt-2 rounded-full ${item.type === 'completed' ? 'bg-green-500' : 'bg-indigo-500'}`} />
+        {activity.length > 0 ? (
+          activity.slice(0, 3).map((item) => (
+            <div key={`${item.domainId}-${item.topicId}`} className="flex items-start space-x-3">
+              <div className="flex-shrink-0">
+                <div className="w-2 h-2 mt-2 rounded-full bg-green-500" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-900 dark:text-gray-100">{item.title}</p>
+                <p className="text-xs text-gray-500">
+                  {new Date(item.time).toLocaleString()}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-sm text-gray-900 dark:text-gray-100">{item.title}</p>
-              <p className="text-xs text-gray-500">{item.time}</p>
-            </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No recent activity</p>
+        )}
       </div>
     </Card>
   </motion.div>
@@ -98,12 +99,9 @@ const Dashboard = () => {
         setDomainsProgress(domainsProgress);
         setTotalTopicsCompleted(totalTopicsCompleted);
         
-        // Mock recent activity - replace with actual API call
-        setRecentActivity([
-          { type: 'completed', title: 'Completed React Hooks in Web Dev', time: '2 hours ago' },
-          { type: 'started', title: 'Started Docker in DevOps', time: '4 hours ago' },
-          { type: 'completed', title: 'Completed Data Structures in DSA', time: '1 day ago' },
-        ]);
+        // Fetch recent activity
+        const activity = await getRecentActivity();
+        setRecentActivity(activity);
         
         // Mock recommended articles - replace with actual API call
         setRecommendedArticles([
@@ -144,27 +142,23 @@ const Dashboard = () => {
     { 
       title: 'Learning Progress', 
       value: `${calculateOverallProgress()}%`, 
-      icon: BookOpenIcon, 
-      trend: 12 
+      icon: BookOpenIcon
     },
     { 
       title: 'Active Domains', 
       value: domainsProgress.length.toString(), 
-      icon: CubeIcon, 
-      trend: -2 
+      icon: CubeIcon
     },
     { 
       title: 'Topics Completed', 
       value: totalTopicsCompleted.toString(), 
-      icon: DocumentTextIcon, 
-      trend: 8 
+      icon: DocumentTextIcon
     },
     { 
       title: 'Time Spent', 
       value: '12h', 
-      icon: ClockIcon, 
-      trend: 15 
-    },
+      icon: ClockIcon
+    }
   ];
 
   if (loading) {

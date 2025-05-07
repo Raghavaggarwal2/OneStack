@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { formatDistanceToNow } from "date-fns";
 import Card from "./ui/Card";
+import { getRecentActivity } from "../services/domainService";
 
 const RecentActivitySection = () => {
   const [recentActivity, setRecentActivity] = useState([]);
@@ -11,12 +10,8 @@ const RecentActivitySection = () => {
   useEffect(() => {
     const fetchRecentActivity = async () => {
       try {
-        const response = await fetch("/api/recent-activity");
-        if (!response.ok) {
-          throw new Error("Failed to fetch recent activity");
-        }
-        const data = await response.json();
-        setRecentActivity(data);
+        const activity = await getRecentActivity();
+        setRecentActivity(activity.slice(0, 3));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -33,43 +28,35 @@ const RecentActivitySection = () => {
       
       {loading ? (
         <div className="flex items-center justify-center h-32">
-          <div className="loader"></div>
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
         </div>
       ) : error ? (
         <div className="text-red-500 dark:text-red-400">{error}</div>
       ) : (
         <div className="space-y-4">
-          {recentActivity.map((activity) => (
-            <div key={activity._id} className="border-b dark:border-gray-700 pb-3 last:border-0">
-              <Link 
-                to={`/profile/${activity.user._id}`}
-                className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+          {recentActivity.length > 0 ? (
+            recentActivity.map((activity) => (
+              <div 
+                key={`${activity.domainId}-${activity.topicId}`} 
+                className="border-b dark:border-gray-700 pb-3 last:border-0"
               >
-                {activity.user.username}
-              </Link>
-              <span className="text-gray-600 dark:text-gray-400"> {activity.action} </span>
-              
-              {activity.questionId ? (
-                <Link 
-                  to={`/questions/${activity.questionId._id}`}
-                  className="text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                  {activity.questionId.title}
-                </Link>
-              ) : (
-                <span className="italic text-gray-500 dark:text-gray-500">deleted content</span>
-              )}
-              
-              <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                {formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="text-gray-600 dark:text-gray-400">{activity.title}</span>
+                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                      {new Date(activity.time).toLocaleString()}
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-gray-500 dark:text-gray-400">No recent activity to show.</p>
+          )}
         </div>
-      )}
-      
-      {!loading && !error && recentActivity.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400">No recent activity to show.</p>
       )}
     </Card>
   );

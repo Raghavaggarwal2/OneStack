@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const {
-  updateDomainProgress,
-  getDomainProgress,
-  getAllDomainsProgress
+const { 
+  updateDomainProgress, 
+  getDomainProgress, 
+  getAllDomainsProgress,
+  getRecentActivity 
 } = require('../controllers/domainController');
 
 // All routes are protected with auth middleware
@@ -18,5 +19,8 @@ router.get('/progress/:domainId', getDomainProgress);
 
 // Get progress for all domains
 router.get('/progress', getAllDomainsProgress);
+
+// Get recent activity
+router.get('/recent-activity', getRecentActivity);
 
 module.exports = router;

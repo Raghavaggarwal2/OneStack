@@ -68,3 +68,24 @@ export const getAllDomainsProgress = async () => {
     throw error;
   }
 };
+
+export const getRecentActivity = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    if (!token) throw new Error('No authentication token found');
+
+    const response = await fetch(`${API_URL}/domains/recent-activity`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+    if (!data.success) throw new Error(data.error);
+    
+    return data.recentActivity;
+  } catch (error) {
+    console.error('Error fetching recent activity:', error);
+    throw error;
+  }
+};

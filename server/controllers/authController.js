@@ -29,13 +29,15 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create user with our custom method
+    // Create user with empty domain progress
     try {
       const user = await User.createUser({
         firstName,
         lastName,
         email,
         password: hashedPassword,
+        domainProgress: [], // Initialize with empty array
+        totalTopicsCompleted: 0 // Initialize with 0
       });
 
       res.status(201).json({

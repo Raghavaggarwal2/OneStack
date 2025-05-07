@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 
+const topicSchema = new mongoose.Schema({
+  id: Number,
+  name: String,
+  completed: Boolean,
+  completedAt: Date
+});
+
 const domainProgressSchema = new mongoose.Schema({
   domainId: String,
   domainName: String,
   totalTopics: Number,
   completedTopics: Number,
   lastUpdated: Date,
-  topics: [{
-    id: Number,
-    name: String,
-    completed: Boolean,
-    completedAt: Date
-  }]
+  topics: [topicSchema]
 });
 
-// Define the schema without unique: true initially to avoid complications
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
