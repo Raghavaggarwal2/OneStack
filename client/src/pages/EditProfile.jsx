@@ -6,19 +6,20 @@ import { useNavigate } from 'react-router-dom';
 const EditProfile = () => {
   const { user, updateUserProfile } = useAuth();
   const navigate = useNavigate();
-
+  console.log(user)
   const [formData, setFormData] = useState({
-    firstName: user.data?.firstName || '',
-    lastName: user.data?.lastName || '',
-    email: user.data?.email || '',
-    profileImage: user.data?.profileImage || '',
-    techStack: user.data?.techStack || [],
-    age: user.data?.age || '',
-    gender: user.data?.gender || '',
-    degree: user.data?.degree || '',
-    university: user.data?.university || '',
-    yearOfPassing: user.data?.yearOfPassing || ''
+    firstName: user?.firstName || user.data?.firstName || '',
+    lastName: user?.lastName || user.data?.lastName || '',
+    email: user?.email || user.data?.email || '',
+    profileImage: user?.profileImage || user.data?.profileImage || '',
+    techStack: user?.techStack || user.data?.techStack || [] ,
+    age: user?.age || user.data?.age || '',
+     gender: user?.gender || user.data?.gender || '',
+     degree: user?.degree || user.data?.degree || '',
+     university: user?.university || user.data?.university || '',
+    yearOfPassing: user?.yearOfPassing || user.data?.yearOfPassing || ''
   });
+  console.log(formData)
 
   const [newTech, setNewTech] = useState('');
   const years = Array.from({ length: 8 }, (_, i) => 2022 + i);
