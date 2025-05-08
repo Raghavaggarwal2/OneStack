@@ -65,7 +65,6 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify(userData),
       });
-      
       const data = await response.json();
       console.log('Registered');
       
@@ -113,6 +112,56 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update user profile
+  const updateUserProfile = async (profileData) => {
+    try {
+      if (!user || !user.token) {
+        throw new Error('User not authenticated');
+      }
+      
+      // Make API call to update user profile
+      const response = await fetch(`http://localhost:5000/api/users/profile`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        },
+        body: JSON.stringify(profileData)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Profile update error:', errorData, 'Status:', response.status);
+        throw new Error(errorData.message || `Failed to update profile: ${response.status}`);
+      }
+      
+      // After successful update, fetch the latest user data
+      const userResponse = await fetch(`http://localhost:5000/api/users/profile`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
+      
+      if (!userResponse.ok) {
+        console.error('Failed to fetch updated profile');
+        throw new Error('Failed to fetch updated profile');
+      }
+      
+      const latestUserData = await userResponse.json();
+      console.log(latestUserData)
+      // Update user in state and localStorage with complete user data
+      const updatedUser = { ...latestUserData, token: user.token };
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      
+      return { success: true, data: updatedUser };
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      return { success: false, error: error.message };
+    }
+  };
+
   const value = {
     user,
     loading,
@@ -120,6 +169,7 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     isAuthenticated: !!user,
+    updateUserProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

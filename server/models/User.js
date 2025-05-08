@@ -40,6 +40,35 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required'],
     minlength: [10, 'Password must be at least 10 characters long']
   },
+  // Profile fields
+  profileImage: {
+    type: String,
+    trim: true
+  },
+  techStack: {
+    type: [String],
+    default: []
+  },
+  age: {
+    type: Number,
+    min: 0
+  },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female', 'Other', '']
+  },
+  // Education details
+  degree: {
+    type: String,
+    trim: true
+  },
+  university: {
+    type: String,
+    trim: true
+  },
+  yearOfPassing: {
+    type: Number
+  },
   domainProgress: [domainProgressSchema],
   totalTopicsCompleted: {
     type: Number,
