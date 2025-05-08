@@ -13,6 +13,8 @@ import Domain from './pages/Domain';
 import ArticleDetail from './pages/articles/ArticleDetail';
 import DomainExplorer from './pages/domains/DomainExplorer';
 import ArticleList from './pages/articles/ArticleList';
+import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
 
 // Domain Pages
 import DSA from './pages/domains/DSA';
@@ -87,6 +89,18 @@ function App() {
           <Route path="articles" element={<ProtectedRoute><ArticleList /></ProtectedRoute>} />
           <Route path="articles/:id" element={<ProtectedRoute><ArticleDetail /></ProtectedRoute>} />
           <Route path="domains" element={<ProtectedRoute><DomainExplorer /></ProtectedRoute>} />
+
+          {/* Protected Profile route */}
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
+          <Route path="/profile/edit" element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          } />
         </Route>
       </Routes>
       

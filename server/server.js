@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const domainRoutes = require('./routes/domainRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 const mongoose = require('mongoose');
 
 // Load env vars
@@ -21,6 +22,7 @@ app.use(cors());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/domains', domainRoutes);
+app.use('/api/users/profile', profileRoutes)
 
 // Health check route
 app.get('/', (req, res) => {
