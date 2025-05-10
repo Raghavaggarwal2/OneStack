@@ -24,6 +24,7 @@ const Footer = () => {
         body: JSON.stringify({ email }),
       }
     );
+    console.log(response);
     const data = await response.json();
     if (response.ok) {
       setSubscribeStatus({
