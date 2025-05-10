@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const EditProfile = () => {
   const { user, updateUserProfile } = useAuth();
   const navigate = useNavigate();
-  console.log(user)
+  // console.log(user)
   const [formData, setFormData] = useState({
     firstName: user?.firstName || user.data?.firstName || '',
     lastName: user?.lastName || user.data?.lastName || '',
@@ -19,7 +19,7 @@ const EditProfile = () => {
      university: user?.university || user.data?.university || '',
     yearOfPassing: user?.yearOfPassing || user.data?.yearOfPassing || ''
   });
-  console.log(formData)
+  // console.log(formData)
 
   const [newTech, setNewTech] = useState('');
   const years = Array.from({ length: 8 }, (_, i) => 2022 + i);

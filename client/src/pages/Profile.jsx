@@ -17,7 +17,7 @@ const Profile = () => {
     <div className="max-w-2xl mx-auto px-4 py-8">
       <div className="flex items-center space-x-6 mb-8">
         <img
-          src={user?.profileImage || userData?.profileImage || `https://ui-avatars.com/api/?name=${userData?.firstName[0]}`}
+          src={user?.profileImage || userData?.profileImage || `https://ui-avatars.com/api/?name=${user?.firstName[0] || userData?.firstName[0]}`}
           alt="Profile"
           className="w-24 h-24 rounded-full object-cover border-2 border-indigo-500"
         />

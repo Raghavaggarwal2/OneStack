@@ -45,7 +45,7 @@ const Navbar = () => {
                 <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-300 transition duration-200">
                   {(user.profileImage || user.data?.profileImage) ? 
                     <img src={user.profileImage || user.data?.profileImage} alt="Profile" className="h-full w-full object-cover" /> : 
-                    <span>{(user.data?.firstName || user?.firstName) ? user.data?.firstName.charAt(0).toUpperCase() : 'A'}</span>
+                    <span>{(user.data?.firstName || user?.firstName) ? (user.data?.firstName.charAt(0).toUpperCase() || user?.firstName.charAt(0).toUpperCase()) : 'A'}</span>
                   }
                 </div>
               </Link>
