@@ -5,7 +5,9 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const domainRoutes = require('./routes/domainRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const newsletterRoute = require('./routes/newsletterRoutes');
 const mongoose = require('mongoose');
+
 
 // Load env vars
 dotenv.config();
@@ -17,16 +19,20 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+
+// Update CORS configuration to allow requests from frontend
 app.use(cors({
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL || 'https://yourproductionurl.com' 
+    : 'http://localhost:3000',
+  credentials: true
 }));
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/domains', domainRoutes);
-app.use('/api/users/profile', profileRoutes)
+app.use('/api/users/profile', profileRoutes);
+app.use('/api/newsletter', newsletterRoute);
 
 // Health check route
 app.get('/', (req, res) => {
