@@ -282,7 +282,7 @@ const Dashboard = () => {
                   className="mb-8 text-center xl:text-left"
                 >
                   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-purple-900 dark:text-purple-100">
-                    Progress <span className="mt-4">Dashboard</span> 
+                    Track Your <span className="mt-4">Progress</span> 
                   </h1>
                   <p className="text-xl sm:text-2xl text-purple-600 dark:text-purple-400 mb-8 md:mb-12">
                     Track your learning progress and explore recommended content
