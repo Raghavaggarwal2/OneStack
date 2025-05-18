@@ -264,12 +264,11 @@ const ChatBot = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div className="fixed bottom-4 right-4 z-50">
       {/* Chat toggle button */}
       <button
         onClick={toggleChat}
-        className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white p-3.5 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300"
-        aria-label="Toggle chat"
+        className="bg-gradient-to-r from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl"
       >
         {isOpen ? (
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -284,120 +283,65 @@ const ChatBot = () => {
 
       {/* Chat window */}
       {isOpen && (
-        <div className="absolute bottom-16 right-0 w-80 md:w-96 bg-white dark:bg-gray-800 rounded-xl shadow-2xl flex flex-col transition-all duration-300 ease-in-out border border-gray-200 dark:border-gray-700 overflow-hidden transform animate-fadeIn">
-          {/* Chat header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-t-xl flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-medium">OneStack Tech Assistant</h3>
-            </div>
-            <div className="flex items-center space-x-2">
-              <button 
-                onClick={clearHistory}
-                className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors tooltip"
-                aria-label="Clear chat history"
-                title="Clear chat history"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
-              <button 
-                onClick={toggleChat}
-                className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors"
-                aria-label="Close chat"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+        <div className="absolute bottom-16 right-0 w-96 max-w-[calc(100vw-2rem)] h-[600px] max-h-[80vh] bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-lg shadow-2xl flex flex-col overflow-hidden">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-4 text-white flex justify-between items-center">
+            <h3 className="font-medium">OneStack Tech Assistant</h3>
+            <button
+              onClick={clearHistory}
+              className="text-purple-100 hover:text-white transition-colors"
+              title="Clear chat history"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
           </div>
 
-          {/* Messages container */}
-          <div className="flex-1 p-4 overflow-y-auto max-h-96 space-y-4 bg-gray-50 dark:bg-gray-900 scroll-smooth">
-            {messages.map((msg, index) => (
-              <div 
+          {/* Messages area */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((message, index) => (
+              <div
                 key={index}
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                {msg.role === 'assistant' && (
-                  <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center mr-2 mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                )}
-                <div className={`max-w-[75%] break-words rounded-2xl px-4 py-3 ${
-                  msg.role === 'user' 
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-tr-none shadow-md' 
-                    : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-tl-none shadow-md border border-gray-200 dark:border-gray-600'
+                <div className={`max-w-[80%] rounded-lg p-3 ${
+                  message.role === 'user' 
+                    ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white'
+                    : 'bg-white dark:bg-gray-300 shadow-md'
                 }`}>
-                  {msg.role === 'assistant' ? (
-                    <MessageContent content={msg.content} />
-                  ) : (
-                    <p className="text-sm">{msg.content}</p>
-                  )}
+                  <MessageContent content={message.content} />
                 </div>
-                {msg.role === 'user' && (
-                  <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ml-2 mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                )}
               </div>
             ))}
-            {isLoading && (
-              <div className="flex justify-start animate-fadeIn">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center mr-2 mt-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div className="bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-2xl rounded-tl-none p-4 max-w-[75%] shadow-md border border-gray-200 dark:border-gray-600">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-150"></div>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce delay-300"></div>
-                  </div>
-                </div>
-              </div>
-            )}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input form */}
-          <form onSubmit={handleSubmit} className="border-t border-gray-200 dark:border-gray-700 p-3 bg-white dark:bg-gray-800">
-            <div className="flex rounded-full bg-gray-100 focus-within:ring-2 focus-within:ring-blue-500 dark:bg-gray-700 px-3 py-1 shadow-inner">
+          {/* Input area */}
+          <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-gray-800 border-t border-purple-200 dark:border-purple-700">
+            <div className="flex space-x-2">
               <input
                 ref={inputRef}
                 type="text"
                 value={input}
                 onChange={handleInputChange}
-                placeholder="Ask a tech question..."
-                className="flex-1 bg-transparent px-2 py-2 border-none text-gray-700 dark:text-gray-200 text-sm rounded-3xl"
+                placeholder="Type your message..."
+                className="flex-1 rounded-lg border border-purple-200 dark:border-purple-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:text-white"
                 disabled={isLoading}
               />
               <button
                 type="submit"
-                className={`p-2 ml-2 rounded-full ${input.trim() === '' || isLoading 
-                  ? 'text-gray-400 cursor-not-allowed' 
-                  : 'text-blue-500 hover:text-blue-700 hover:bg-blue-100 dark:hover:bg-gray-600'} transition-colors focus:outline-none`}
-                disabled={isLoading || input.trim() === ''}
-                aria-label="Send message"
+                disabled={isLoading || !input.trim()}
+                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="h-4 w-4" strokeWidth="2">
-                  <path d="M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z" fill="currentColor" />
-                </svg>
+                {isLoading ? (
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
               </button>
-            </div>
-            <div className="text-xs text-center text-gray-500 mt-2">
-              Ask me any tech-related questions
             </div>
           </form>
         </div>

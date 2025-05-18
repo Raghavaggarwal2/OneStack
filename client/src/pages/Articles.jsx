@@ -44,6 +44,7 @@ const FilterButton = ({ active, children, onClick }) => (
     variant={active ? 'primary' : 'outline'}
     size="sm"
     onClick={onClick}
+    className="whitespace-nowrap"
   >
     {children}
   </Button>
@@ -90,38 +91,40 @@ const Articles = () => {
   });
 
   return (
-    <Container>
+    <Container className="px-4 sm:px-6">
       <Section
         title="Articles"
         description="Explore our collection of articles and tutorials to enhance your knowledge"
       >
         <div className="space-y-6">
           {/* Search and Filters */}
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-col space-y-4 w-full">
             <Input
               type="search"
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="sm:max-w-xs"
+              className="w-full sm:w-auto"
             />
-            <div className="flex space-x-2 overflow-x-auto pb-2">
-              {filters.map((filter) => (
-                <FilterButton
-                  key={filter}
-                  active={activeFilter === filter}
-                  onClick={() => setActiveFilter(filter)}
-                >
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                </FilterButton>
-              ))}
+            <div className="flex overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0 pb-2">
+              <div className="flex space-x-2 min-w-max">
+                {filters.map((filter) => (
+                  <FilterButton
+                    key={filter}
+                    active={activeFilter === filter}
+                    onClick={() => setActiveFilter(filter)}
+                  >
+                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  </FilterButton>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Data Science Featured Section */}
           {!loading && dsArticles.length > 0 && activeFilter === 'all' && (
             <div className="mb-8">
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 space-y-2 sm:space-y-0">
                 <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">Data Science Spotlight</h2>
                 <Button 
                   variant="link" 
@@ -132,7 +135,7 @@ const Articles = () => {
                 </Button>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {dsArticles.slice(0, 3).map((article) => (
                   <ArticleCard key={article.id} article={article} />
                 ))}
@@ -145,7 +148,7 @@ const Articles = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
           ) : (
-            <Grid cols={{ base: 1, md: 2, lg: 3 }} gap={6}>
+            <Grid cols={{ base: 1, md: 2, lg: 3 }} gap={{ base: 4, sm: 6 }}>
               {filteredArticles.map((article) => (
                 <ArticleCard key={article.id} article={article} />
               ))}

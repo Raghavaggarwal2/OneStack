@@ -43,10 +43,17 @@ const Footer = () => {
 
   return (    <footer className="bg-white/80 dark:bg-black/80 backdrop-blur-sm text-purple-900 dark:text-purple-100 pt-10 pb-6 transition-colors duration-200">
       <div className="container mx-auto px-12 max-w-[1920px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">          {/* Company Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">OneStack</h3>            <p className="text-purple-600 dark:text-purple-400 mb-4">
+            <div className="flex items-center gap-3 mb-0">
+              <img 
+                src="/logo.png" 
+                alt="OneStack Logo" 
+                className="w-28 h-28 rounded-lg"
+              />
+              {/* <h3 className="text-xl font-semibold">OneStack</h3> */}
+            </div>
+            <p className="text-purple-600 dark:text-purple-400 mb-4">
               Your comprehensive learning platform for all tech domains.
             </p>
             <div className="flex space-x-4">
@@ -158,15 +165,15 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/domain/dsa"
+                  to="/domain/blockchain"
                   className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors"
                 >
-                  DSA
+                  Blockchain
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/domain/web-dev"
+                  to="/domain/web-development"
                   className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors"
                 >
                   Web Development
@@ -174,10 +181,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/domain/aiml"
+                  to="/domain/data-science"
                   className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors"
                 >
-                  AI/ML
+                  Data Science
                 </Link>
               </li>
               <li>

@@ -42,12 +42,13 @@ const Navbar = () => {
       </div>
 
       {/* Vertical Sidebar */}
-      <nav className="fixed left-0 top-0 h-full w-[72px] bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800 flex flex-col items-center py-4 z-20">
-        {/* Logo */}
-        <Link to="/" className="mb-6">
-          <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
-            <span className="text-white font-bold text-lg">OS</span>
-          </div>
+      <nav className="fixed left-0 top-0 h-full w-[72px] bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800 flex flex-col items-center py-4 z-20">        {/* Logo */}
+        <Link to="/" className="mb-12">
+          <img 
+            src="/logo.png" 
+            alt="OneStack Logo" 
+            className="w-24 h-24 rounded-lg hover:opacity-90 transition-opacity"
+          />
         </Link>
 
         {/* Navigation Items */}
@@ -84,7 +85,7 @@ const Navbar = () => {
           {isAuthenticated ? (
             <Link to="/profile" className="relative group">
               <motion.div 
-                className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-300 transition-all"
+                className="w-10 h-10 mb-5 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-300 transition-all"
                 whileHover={{ scale: 1.05 }}
               >
                 {(user.profileImage || user.data?.profileImage) ? (
@@ -106,7 +107,7 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="w-10 h-10 mb-5 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               <LogOut className="w-5 h-5 text-gray-700 dark:text-gray-300" />
             </Link>
