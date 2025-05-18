@@ -66,23 +66,23 @@ function App() {
           } />
           
           {/* Protected Individual domain routes */}
-          <Route path="domain/dsa" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
+          <Route path="domain/data-structures-and-algorithms" element={<ProtectedRoute><DSA /></ProtectedRoute>} />
           <Route path="domain/aptitude" element={<ProtectedRoute><Aptitude /></ProtectedRoute>} />
           <Route path="domain/data-science" element={<ProtectedRoute><DataScience /></ProtectedRoute>} />
-          <Route path="domain/genai" element={<ProtectedRoute><GenAI /></ProtectedRoute>} />
-          <Route path="domain/aiml" element={<ProtectedRoute><AIML /></ProtectedRoute>} />
+          <Route path="domain/generative-ai" element={<ProtectedRoute><GenAI /></ProtectedRoute>} />
+          <Route path="domain/artificial-intelligence-and-machine-learning" element={<ProtectedRoute><AIML /></ProtectedRoute>} />
           <Route path="domain/devops" element={<ProtectedRoute><DevOps /></ProtectedRoute>} />
           <Route path="domain/cloud-computing" element={<ProtectedRoute><CloudComputing /></ProtectedRoute>} />
           <Route path="domain/blockchain" element={<ProtectedRoute><Blockchain /></ProtectedRoute>} />
           <Route path="domain/cyber-security" element={<ProtectedRoute><CyberSecurity /></ProtectedRoute>} />
-          <Route path="domain/android-dev" element={<ProtectedRoute><AndroidDev /></ProtectedRoute>} />
-          <Route path="domain/ios-dev" element={<ProtectedRoute><IOSDev /></ProtectedRoute>} />
-          <Route path="domain/web-dev" element={<ProtectedRoute><WebDev /></ProtectedRoute>} />
-          <Route path="domain/game-dev" element={<ProtectedRoute><GameDev /></ProtectedRoute>} />
-          <Route path="domain/ui-ux" element={<ProtectedRoute><UIUX /></ProtectedRoute>} />
+          <Route path="domain/android-development" element={<ProtectedRoute><AndroidDev /></ProtectedRoute>} />
+          <Route path="domain/ios-development" element={<ProtectedRoute><IOSDev /></ProtectedRoute>} />
+          <Route path="domain/web-development" element={<ProtectedRoute><WebDev /></ProtectedRoute>} />
+          <Route path="domain/game-development" element={<ProtectedRoute><GameDev /></ProtectedRoute>} />
+          <Route path="domain/ui/ux" element={<ProtectedRoute><UIUX /></ProtectedRoute>} />
           <Route path="domain/ethical-hacking" element={<ProtectedRoute><EthicalHacking /></ProtectedRoute>} />
           <Route path="domain/web-3" element={<ProtectedRoute><Web3 /></ProtectedRoute>} />
-          <Route path="domain/iot" element={<ProtectedRoute><IoT /></ProtectedRoute>} />
+          <Route path="domain/iot-(internet-of-things)" element={<ProtectedRoute><IoT /></ProtectedRoute>} />
           <Route path="domain/vlsi" element={<ProtectedRoute><VLSI /></ProtectedRoute>} />
           
           {/* Protected Article routes */}

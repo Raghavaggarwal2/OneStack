@@ -44,109 +44,203 @@ const CloudComputing = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Back button */}
-      <div className="mb-4">
-        <Link 
-          to="/domains" 
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
-          </svg>
-          Back to Domains
-        </Link>
-      </div>
-      
-      {/* Domain header with progress */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{domainName}</h1>
-        
-        <div className="mb-6">
-          <div className="flex justify-between text-sm mb-1">
-            <span className="text-gray-600 dark:text-gray-300">Your Progress</span>
-            <span className="font-medium">{progress}%</span>
-          </div>
-          <ProgressBar value={progress} color={domainColor} />
-        </div>
-        
-        {/* Technology stack section */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-3">Tech Stack</h2>
-          <div className="flex flex-wrap gap-2">
-            {/* Tech stack tags */}
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">AWS</span>
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Azure</span>
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Google Cloud Platform</span>
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Kubernetes</span>
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm">Docker</span>
-          </div>
-        </div>
-        
-        {/* Domain description */}
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-3">About</h2>
-          <p className="text-gray-700 dark:text-gray-300">
-            Cloud Computing provides on-demand computing services over the internet. It offers scalability, flexibility, and cost-efficiency for deploying and managing applications. With cloud services, businesses can reduce infrastructure costs, scale resources based on demand, and focus on their core activities without worrying about hardware maintenance.
-          </p>
-        </div>
-      </div>
-      
-      {/* Topics checklist */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-        <TopicChecklist 
-          topics={topics} 
-          domainName={domainName} 
-          onProgressChange={handleProgressChange} 
-        />
-      </div>
-      
-      {/* Resources section */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold mb-4">Resources</h2>
-        
-        {/* Documentation */}
-        <div className="mb-4">
-          <h3 className="text-lg font-medium mb-2">Documentation</h3>
-          <a 
-            href="https://docs.aws.amazon.com/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="relative mb-8">
+          <Link 
+            to="/domains" 
+            className="absolute top-0 left-0 flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
             </svg>
-            AWS Documentation - Amazon Web Services
-          </a>
+            <span>Back to Domains</span>
+          </Link>
+
+          <div className="text-center pt-12">
+            <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">{domainName}</h1>
+            <div className="max-w-3xl mx-auto">
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                Master cloud technologies and build scalable infrastructure
+              </p>
+            </div>
+          </div>
         </div>
-        
-        {/* YouTube resources */}
-        <div>
-          <h3 className="text-lg font-medium mb-2">Video Tutorials</h3>
-          <div className="space-y-2">
-            <a 
-              href="https://www.youtube.com/watch?v=Z3SYDTMP3ME" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1 text-red-600">
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-              </svg>
-              Cloud Computing Explained - Fundamentals for Beginners
-            </a>
-            <a 
-              href="https://www.youtube.com/watch?v=b4OQDkbcOzU" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1 text-red-600">
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-              </svg>
-              AWS vs Azure vs GCP - Cloud Services Compared
-            </a>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Progress Overview */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Your Progress</h2>
+                <span className="text-3xl font-bold text-sky-600 dark:text-sky-400">{progress}%</span>
+              </div>
+              <ProgressBar 
+                value={progress} 
+                color={domainColor} 
+                className="h-3 rounded-full"
+              />
+              
+              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{topics.length}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Total Topics</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {topics.filter(t => t.completed).length}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Completed</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {topics.length - topics.filter(t => t.completed).length}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Remaining</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-sky-600 dark:text-sky-400">
+                    {Math.round((topics.filter(t => t.completed).length / topics.length) * 100)}%
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Success Rate</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Topics Checklist */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Learning Path</h2>
+              <div className="grid gap-4">
+                {topics.map((topic, index) => (
+                  <div 
+                    key={topic.id}
+                    className={`relative flex items-center p-4 rounded-lg transition-all duration-200
+                      ${topic.completed 
+                        ? 'bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800' 
+                        : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700'}
+                    `}
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center">
+                        <span className={`flex items-center justify-center w-8 h-8 rounded-full mr-4 text-sm font-medium
+                          ${topic.completed 
+                            ? 'bg-sky-200 dark:bg-sky-800 text-sky-800 dark:text-sky-200' 
+                            : 'bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300'}
+                        `}>
+                          {index + 1}
+                        </span>
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {topic.name}
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      <input
+                        type="checkbox"
+                        checked={topic.completed}
+                        onChange={() => {
+                          const newTopics = [...topics];
+                          newTopics[index].completed = !newTopics[index].completed;
+                          setTopics(newTopics);
+                          saveDomainProgress(domainName, newTopics);
+                          const completedCount = newTopics.filter(t => t.completed).length;
+                          setProgress(Math.round((completedCount / newTopics.length) * 100));
+                        }}
+                        className="w-5 h-5 text-sky-600 rounded border-gray-300 focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-8">
+            {/* Tech Stack */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Tech Stack</h2>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-4 py-2 rounded-full text-sm font-medium bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200">AWS</span>
+                <span className="px-4 py-2 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">Azure</span>
+                <span className="px-4 py-2 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">GCP</span>
+                <span className="px-4 py-2 rounded-full text-sm font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">Docker</span>
+              </div>
+            </div>
+
+            {/* Resources */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Learning Resources</h2>
+              
+              {/* Documentation */}
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Documentation</h3>
+                <a 
+                  href="https://aws.amazon.com/getting-started/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center p-4 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-sky-600 dark:text-sky-400 mr-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                  </svg>
+                  <div>
+                    <div className="font-medium text-gray-900 dark:text-white">AWS Documentation</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Cloud Computing Fundamentals</div>
+                  </div>
+                </a>
+              </div>
+
+              {/* Video Tutorials */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
+                <div className="grid gap-4">
+                  <a 
+                    href="https://www.youtube.com/watch?v=ulprqHHWlng" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden rounded-lg aspect-video"
+                  >
+                    <img 
+                      src={`https://img.youtube.com/vi/ulprqHHWlng/maxresdefault.jpg`}
+                      alt="AWS Course"
+                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                      <div className="text-white text-sm font-medium">FreeCodeCamp - AWS Certified Cloud Practitioner Course</div>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="https://www.youtube.com/watch?v=3hLmDS179YE" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden rounded-lg aspect-video"
+                  >
+                    <img 
+                      src={`https://img.youtube.com/vi/3hLmDS179YE/maxresdefault.jpg`}
+                      alt="Cloud Computing Course"
+                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                      <div className="text-white text-sm font-medium">TechWorld - Cloud Computing Full Course</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -154,4 +248,4 @@ const CloudComputing = () => {
   );
 };
 
-export default CloudComputing; 
+export default CloudComputing;
