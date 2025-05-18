@@ -161,18 +161,17 @@ const getRecentActivity = async (req, res) => {
         const domainTopics = domain.topics
           .filter(topic => topic.completed)
           .map(topic => ({
-            type: 'completed',
-            title: `Completed ${topic.name} in ${domain.domainName}`,
+            type: 'completed',            title: `Completed ${topic.name}`,
             time: topic.completedAt || new Date(),
             domainId: domain.domainId,
+            domainName: domain.domainName,
             topicId: topic.id
           }));
         return [...activities, ...domainTopics];
       }, [])
-      // Sort by completion time, most recent first
-      .sort((a, b) => new Date(b.time) - new Date(a.time))
-      // Take only the last 5 completed topics
-      .slice(0, 5);
+      // Sort by completion time, most recent first      .sort((a, b) => new Date(b.time) - new Date(a.time))
+      // Take the last 35 completed topics
+      .slice(0, 35);
 
     res.json({
       success: true,

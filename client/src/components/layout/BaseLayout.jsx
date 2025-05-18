@@ -7,11 +7,10 @@ import { useTheme } from '../../context/ThemeContext';
 const BaseLayout = () => {
   const { theme } = useTheme();
 
-  return (
-    <div className={theme}>
-      <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+  return (    <div className={theme}>
+      <div className="flex flex-col min-h-screen bg-gradient-to-b from-purple-100 to-purple-900 dark:from-purple-900 dark:to-black">
         <Navbar />
-        <main className="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+        <main className="flex-grow">
           <Outlet />
         </main>
         <Footer />

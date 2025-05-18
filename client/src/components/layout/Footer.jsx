@@ -41,20 +41,18 @@ const Footer = () => {
     }
   };
 
-  return (
-    <footer className="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white pt-10 pb-6 transition-colors duration-200">
-      <div className="container mx-auto px-4">
+  return (    <footer className="bg-white/80 dark:bg-black/80 backdrop-blur-sm text-purple-900 dark:text-purple-100 pt-10 pb-6 transition-colors duration-200">
+      <div className="container mx-auto px-12 max-w-[1920px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">OneStack</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <h3 className="text-xl font-semibold mb-4">OneStack</h3>            <p className="text-purple-600 dark:text-purple-400 mb-4">
               Your comprehensive learning platform for all tech domains.
             </p>
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors"
+                className="text-purple-600 dark:text-purple-400 hover:text-purple-900 dark:hover:text-purple-100 transition-colors"
               >
                 <svg
                   className="w-5 h-5"
@@ -205,13 +203,13 @@ const Footer = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                  className="px-4 py-2 bg-white dark:bg-black border border-purple-200 dark:border-purple-800 text-purple-900 dark:text-purple-100 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors"
                   placeholder="Your email"
                   required
                 />
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-4 py-2 rounded-md transition-colors"
+                  className="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white px-4 py-2 rounded-md transition-colors"
                 >
                   Subscribe
                 </button>
@@ -231,8 +229,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-gray-300 dark:border-gray-800 mt-8 pt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+        {/* Copyright */}        <div className="border-t border-purple-200 dark:border-purple-800 mt-8 pt-6 text-center text-sm text-purple-600 dark:text-purple-400">
           <p>
             &copy; {new Date().getFullYear()} OneStack. All rights reserved.
           </p>
