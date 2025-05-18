@@ -15,6 +15,8 @@ import DomainExplorer from './pages/domains/DomainExplorer';
 import ArticleList from './pages/articles/ArticleList';
 import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
+import About from './pages/About';
+import Team from './pages/Team';
 
 // Domain Pages
 import DSA from './pages/domains/DSA';
@@ -50,6 +52,8 @@ function App() {
           <Route index element={<RootRedirect />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="about" element={<About />} />
+          <Route path="team" element={<Team />} />
           
           {/* Protected Routes */}
           <Route path="dashboard" element={

@@ -112,7 +112,8 @@ const Login = () => {
           initial="hidden"
           animate="visible"
           className="w-full max-w-md"
-white        >          <motion.div
+        >
+          <motion.div
             className="backdrop-blur-lg bg-white/10 dark:bg-black/10 rounded-2xl shadow-2xl p-8 border border-white/20"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -121,10 +122,11 @@ white        >          <motion.div
             {/* Logo and Title */}
             <motion.div variants={itemVariants} className="text-center mb-8">
               <img
-                src="/logo.png"
+                src="/logo.svg"
                 alt="OneStack Logo"
                 className="mx-auto h-28 w-auto mb-1 drop-shadow-xl"
-              />              <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-700 to-purple-900 dark:from-white dark:to-gray-100 bg-clip-text text-transparent">
+              />
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-700 to-purple-900 dark:from-white dark:to-gray-100 bg-clip-text text-transparent">
                 Welcome Back
               </h2>
               <p className="mt-2 text-sm text-gray-600 dark:text-white/80">
@@ -142,7 +144,7 @@ white        >          <motion.div
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-red-500/10 backdrop-blur-sm border border-red-500/20 text-white px-4 py-3 rounded-lg mb-6"
+                className="bg-red-500/10 backdrop-blur-sm border border-red-500/20 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg mb-6"
                 role="alert"
               >
                 <span className="block sm:inline">{error}</span>
@@ -154,7 +156,8 @@ white        >          <motion.div
               className="space-y-6"
               onSubmit={handleSubmit}
             >
-              <motion.div variants={itemVariants} className="space-y-2">                <label className="block text-sm font-medium text-gray-700 dark:text-white/90">
+              <motion.div variants={itemVariants} className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-white/90">
                   Email address
                 </label>
                 <div className="relative group">
@@ -171,7 +174,8 @@ white        >          <motion.div
                 </div>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="space-y-2">                <label className="block text-sm font-medium text-gray-700 dark:text-white/90">
+              <motion.div variants={itemVariants} className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-white/90">
                   Password
                 </label>
                 <div className="relative group">
@@ -197,7 +201,7 @@ white        >          <motion.div
                 disabled={loading}
                 className="relative w-full group"
               >
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-6-- rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-200"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-200"></div>
                 <div className="relative flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl leading-none">
                   {loading ? (
                     <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
