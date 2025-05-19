@@ -4,8 +4,8 @@ import ProgressBar from '../../components/ProgressBar';
 import { loadDomainProgress, saveDomainProgress } from '../../utils/progressUtils';
 
 // Domain-specific data
-const domainName = "UI/UX Design";
-const domainColor = "bg-blue-500";
+const domainName = "UI/UX";  // Keep consistent with domainList
+const domainColor = "bg-rose-500";  // Keep consistent with domainColors
 
 const defaultTopics = [
   { id: 1, name: "Design Fundamentals", completed: false },

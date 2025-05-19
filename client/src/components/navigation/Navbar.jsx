@@ -47,7 +47,7 @@ const Navbar = () => {
           <img 
             src="/logo.png" 
             alt="OneStack Logo" 
-            className="w-24 h-24 rounded-lg hover:opacity-90 transition-opacity"
+            className="w-28 h-auto py-3 rounded-lg hover:opacity-90 transition-opacity"
           />
         </Link>
 

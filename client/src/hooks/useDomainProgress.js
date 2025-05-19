@@ -8,7 +8,7 @@ const useDomainProgress = (domainName, defaultTopics) => {
   const [loading, setLoading] = useState(true);
   const [previousProgress, setPreviousProgress] = useState(0);
 
-  const domainId = domainName.toLowerCase().replace(/\s+/g, '-');
+  const domainId = domainName.toLowerCase().replace(/[\/\s]+/g, '-').trim();
 
   // Load progress when component mounts
   useEffect(() => {

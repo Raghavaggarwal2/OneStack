@@ -30,9 +30,8 @@ const DomainCard = ({ name }) => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  
-  // Generate a URL-friendly version of the domain name
-  const domainId = name.toLowerCase().replace(/\s+/g, '-');
+    // Generate a URL-friendly version of the domain name
+  const domainId = name.toLowerCase().replace(/[\/\s]+/g, '-').trim();
   
   // Get domain color or use default blue
   const colorClass = domainColors[name] || 'bg-blue-500';

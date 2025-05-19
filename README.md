@@ -1,6 +1,6 @@
 # One Stack
 
-A modern learning platform built with React and Tailwind CSS. The platform provides an intuitive interface for users to explore educational content, track their learning progress, and engage with various learning domains.
+A modern learning platform built with MERN Stack. The platform provides an intuitive interface for users to explore educational content, track their learning progress, and engage with various learning domains.
 
 ## Features
 

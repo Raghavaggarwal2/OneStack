@@ -176,7 +176,7 @@ const Register = () => {
             {/* Logo and Title */}
             <motion.div variants={itemVariants} className="text-center mb-8">
               <img
-                src="/logo.svg"
+                src="/logo.png"
                 alt="OneStack Logo"
                 className="mx-auto h-28 w-auto mb-1 drop-shadow-xl"
               />
