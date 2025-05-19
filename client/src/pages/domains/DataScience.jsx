@@ -213,13 +213,13 @@ const DataScience = () => {
                   </a>
 
                   <a 
-                    href="https://www.youtube.com/watch?v=JwSS70SZdyM" 
+                    href="https://youtu.be/gDZ6czwuQ18?si=tcud5vL9wh7JRybt" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src={`https://img.youtube.com/vi/JwSS70SZdyM/maxresdefault.jpg`}
+                      src={`https://i.ytimg.com/vi/gDZ6czwuQ18/maxresdefault.jpg`}
                       alt="Data Science Full Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
@@ -229,7 +229,7 @@ const DataScience = () => {
                       </svg>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                      <div className="text-white text-sm font-medium">Simplilearn - Data Science Full Course</div>
+                      <div className="text-white text-sm font-medium">WsTechCube - Data Science Full Course</div>
                     </div>
                   </a>
                 </div>

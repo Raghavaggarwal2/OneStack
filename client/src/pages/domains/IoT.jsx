@@ -192,13 +192,13 @@ const IoT = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
                 <div className="grid gap-4">
                   <a 
-                    href="https://www.youtube.com/watch?v=h5_Bf0J8Xn4" 
+                    href="https://youtu.be/h0gWfVCSGQQ?si=a4mQZAjpyqXBT8sM" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src="https://img.youtube.com/vi/h5_Bf0J8Xn4/maxresdefault.jpg"
+                      src="https://i.ytimg.com/vi/h0gWfVCSGQQ/maxresdefault.jpg"
                       alt="IoT Development Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />

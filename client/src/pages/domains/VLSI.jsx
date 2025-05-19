@@ -190,13 +190,13 @@ const VLSI = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
                 <div className="grid gap-4">
                   <a 
-                    href="https://www.youtube.com/watch?v=sK-49s3FxXc" 
+                    href="https://youtube.com/playlist?list=PL1h5a0eaDD3pimcMlzW15RpW02HPzIziL&si=tJWpWKQCh7j2NL4Q" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src="https://img.youtube.com/vi/sK-49s3FxXc/maxresdefault.jpg"
+                      src="https://i.ytimg.com/vi/kQYav5eZGeY/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAKeHZmTp3HtgTbrx1R9kt6eIyV9g"
                       alt="VLSI Design Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
@@ -206,7 +206,7 @@ const VLSI = () => {
                       </svg>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                      <div className="text-white text-sm font-medium">Complete VLSI Design Course</div>
+                      <div className="text-white text-sm font-medium">Complete VLSI Physical Design Course</div>
                     </div>
                   </a>
                 </div>

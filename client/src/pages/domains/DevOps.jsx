@@ -213,13 +213,13 @@ const DevOps = () => {
                   </a>
 
                   <a 
-                    href="https://www.youtube.com/watch?v=d6WC5n9G_sM" 
+                    href="https://youtu.be/tgmM3_2dZwg?si=vHLO_m6DvU59zTVb" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src={`https://img.youtube.com/vi/d6WC5n9G_sM/maxresdefault.jpg`}
+                      src={`https://i.ytimg.com/vi/tgmM3_2dZwg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD2UUQorxVdlQFe7jMRNGhnZdxldA`}
                       alt="DevOps Zero to Hero"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
@@ -229,7 +229,7 @@ const DevOps = () => {
                       </svg>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                      <div className="text-white text-sm font-medium">TechWorld - DevOps Zero to Hero</div>
+                      <div className="text-white text-sm font-medium">GreatLearning - DevOps Zero to Hero</div>
                     </div>
                   </a>
                 </div>

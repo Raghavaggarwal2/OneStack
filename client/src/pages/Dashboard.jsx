@@ -141,24 +141,24 @@ const RecommendedArticles = ({ articles }) => (
             className="block"
           >
             <div className="p-4 rounded-xl bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-all border border-purple-100/50 dark:border-purple-800/50">
-              <div className="flex justify-between items-start gap-4">
-                <div className="flex-1">
-                  <h4 className="text-base font-medium text-purple-900 dark:text-purple-100 mb-2 line-clamp-2">
+              <div className="flex justify-between items-start gap-2 sm:gap-4">
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm sm:text-base font-medium text-purple-900 dark:text-purple-100 mb-1 sm:mb-2 line-clamp-2 break-words">
                     {article.title}
                   </h4>
-                  <p className="text-sm text-purple-600/90 dark:text-purple-400/90 line-clamp-2 mb-3">
+                  <p className="text-xs sm:text-sm text-purple-600/90 dark:text-purple-400/90 line-clamp-2 mb-2 sm:mb-3 break-words">
                     {article.excerpt}
                   </p>
-                  <div className="flex items-center space-x-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200">
+                  <div className="flex flex-wrap items-center gap-2 sm:space-x-3">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 truncate max-w-[120px]">
                       {article.source}
                     </span>
-                    <span className="text-xs text-purple-600 dark:text-purple-400">{article.readTime}</span>
+                    <span className="text-xs text-purple-600 dark:text-purple-400 whitespace-nowrap">{article.readTime}</span>
                   </div>
                 </div>
                 <div className="flex-shrink-0">
                   <div className="p-2 bg-purple-100 dark:bg-purple-900/50 rounded-lg">
-                    <MapPinIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    <MapPinIcon className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400" />
                   </div>
                 </div>
               </div>

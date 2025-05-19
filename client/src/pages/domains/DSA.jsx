@@ -198,13 +198,13 @@ const DSA = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
                 <div className="grid gap-4">
                   <a 
-                    href="https://www.youtube.com/watch?v=8hly31xKli0" 
+                    href="https://www.youtube.com/playlist?list=PLfqMhTWNBTe3LtFWcvwpqTkUSlB32kJop" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src={`https://img.youtube.com/vi/8hly31xKli0/maxresdefault.jpg`}
+                      src={`https://i.ytimg.com/vi/yRpLlJmRo2w/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDWx6CrwBwLPpf8WhpblMPE9MK4oQ`}
                       alt="FreeCodeCamp DSA Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
@@ -214,18 +214,18 @@ const DSA = () => {
                       </svg>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                      <div className="text-white text-sm font-medium">FreeCodeCamp - DSA Course</div>
+                      <div className="text-white text-sm font-medium">DSA Course Java</div>
                     </div>
                   </a>
 
                   <a 
-                    href="https://www.youtube.com/watch?v=RBSGKlAvoiM" 
+                    href="https://youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&si=bUs1wuXosbJbE0gh" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src={`https://img.youtube.com/vi/RBSGKlAvoiM/maxresdefault.jpg`}
+                      src={`https://i.ytimg.com/vi/WQoB2z67hvY/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLC67s1Sgk0k2zdN0cWG1WacUylIWQ`}
                       alt="William Fiset DSA Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
@@ -235,7 +235,7 @@ const DSA = () => {
                       </svg>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                      <div className="text-white text-sm font-medium">William Fiset - Full DSA Course</div>
+                      <div className="text-white text-sm font-medium">Full DSA Course Cpp</div>
                     </div>
                   </a>
                 </div>

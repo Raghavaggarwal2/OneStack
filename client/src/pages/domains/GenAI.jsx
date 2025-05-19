@@ -195,13 +195,13 @@ const GenAI = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
                 <div className="grid gap-4">
                   <a 
-                    href="https://www.youtube.com/watch?v=rmVRLeJRkl4" 
+                    href="https://youtu.be/ErH8YKpSsWI?si=yn2Se5KYQjipSA2v" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src="https://img.youtube.com/vi/rmVRLeJRkl4/maxresdefault.jpg"
+                      src="https://i.ytimg.com/vi/ErH8YKpSsWI/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAKjvLfX-3snFZnvr38YHG9vgHudA"
                       alt="Generative AI Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />

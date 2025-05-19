@@ -192,13 +192,13 @@ const CloudComputing = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
                 <div className="grid gap-4">
                   <a 
-                    href="https://www.youtube.com/watch?v=ulprqHHWlng" 
+                    href="https://www.youtube.com/live/q3m1AB9ECXo?si=xZpVYI3L3dpZMGSo" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src={`https://img.youtube.com/vi/ulprqHHWlng/maxresdefault.jpg`}
+                      src={`https://i.ytimg.com/vi/q3m1AB9ECXo/hqdefault.jpg?v=677b8a10`}
                       alt="AWS Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
@@ -208,7 +208,7 @@ const CloudComputing = () => {
                       </svg>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                      <div className="text-white text-sm font-medium">FreeCodeCamp - AWS Certified Cloud Practitioner Course</div>
+                      <div className="text-white text-sm font-medium">Complete Cloud Computing Course</div>
                     </div>
                   </a>
 

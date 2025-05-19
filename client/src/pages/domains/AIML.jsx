@@ -191,13 +191,13 @@ const AIML = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
                 <div className="grid gap-4">
                   <a 
-                    href="https://www.youtube.com/watch?v=JcI5Vnw0b2c" 
+                    href="https://youtu.be/KAkOmoGs-74?si=1xDLlDq_GrdVnFFv" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden rounded-lg aspect-video"
                   >
                     <img 
-                      src="https://img.youtube.com/vi/JcI5Vnw0b2c/maxresdefault.jpg"
+                      src="https://i.ytimg.com/vi/KAkOmoGs-74/sddefault.jpg"
                       alt="Machine Learning Course"
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
