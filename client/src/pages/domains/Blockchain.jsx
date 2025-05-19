@@ -29,7 +29,7 @@ const Blockchain = () => {
   
   // Calculate progress whenever topics change
   useEffect(() => {
-    const completedTopicsCount = topics.filter(topic => topic.completed).length;
+    const completedCount = topics.filter(topic => topic.completed).length;
     setProgress(Math.round((completedCount / topics.length) * 100));
   }, [topics]);
 

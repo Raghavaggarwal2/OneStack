@@ -83,7 +83,7 @@ function App() {
           <Route path="domain/ios-development" element={<ProtectedRoute><IOSDev /></ProtectedRoute>} />
           <Route path="domain/web-development" element={<ProtectedRoute><WebDev /></ProtectedRoute>} />
           <Route path="domain/game-development" element={<ProtectedRoute><GameDev /></ProtectedRoute>} />
-          <Route path="domain/ui/ux" element={<ProtectedRoute><UIUX /></ProtectedRoute>} />
+          <Route path="domain/ui-ux" element={<ProtectedRoute><UIUX /></ProtectedRoute>} />
           <Route path="domain/ethical-hacking" element={<ProtectedRoute><EthicalHacking /></ProtectedRoute>} />
           <Route path="domain/web-3" element={<ProtectedRoute><Web3 /></ProtectedRoute>} />
           <Route path="domain/iot-(internet-of-things)" element={<ProtectedRoute><IoT /></ProtectedRoute>} />
