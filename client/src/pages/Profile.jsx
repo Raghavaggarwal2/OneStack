@@ -26,7 +26,13 @@ const Profile = () => {
             {/* Avatar */}
             <div className="relative -mt-16 sm:-mt-24 mb-4 flex justify-center">
               <img
-                src={user?.profileImage || userData?.profileImage || `https://ui-avatars.com/api/?name=${user?.firstName[0] || userData?.firstName[0]}&size=192&background=random`}
+                src={
+                  user?.profileImage ||
+                  userData?.profileImage ||
+                  `https://ui-avatars.com/api/?name=${
+                    (user?.firstName || userData?.firstName || "")[0]
+                  }&size=192&background=random`
+                }
                 alt="Profile"
                 className="w-32 h-32 sm:w-48 sm:h-48 rounded-full border-4 border-white dark:border-gray-800 object-cover shadow-lg"
               />
