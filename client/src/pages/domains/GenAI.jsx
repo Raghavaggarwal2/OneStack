@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../../components/ProgressBar';
-import { loadDomainProgress, saveDomainProgress } from '../../utils/progressUtils';
+import { loadDomainProgress } from '../../utils/progressUtils';
+import useDomainProgress from '../../hooks/useDomainProgress';
 
 // Domain-specific data
 const domainName = "Generative AI";
@@ -24,12 +25,11 @@ const defaultTopics = [
 
 const GenAI = () => {
   const [progress, setProgress] = useState(0);
-  const [topics, setTopics] = useState(defaultTopics);
+  const { topics, updateTopics, isLoading } = useDomainProgress(domainName, defaultTopics);
   
   // Load saved progress on component mount
   useEffect(() => {
     const savedTopics = loadDomainProgress(domainName, defaultTopics);
-    setTopics(savedTopics);
     
     // Calculate initial progress
     const completedCount = savedTopics.filter(topic => topic.completed).length;
@@ -136,10 +136,14 @@ const GenAI = () => {
                         onChange={() => {
                           const newTopics = [...topics];
                           newTopics[index].completed = !newTopics[index].completed;
-                          setTopics(newTopics);
-                          saveDomainProgress(domainName, newTopics);
-                          const completedCount = newTopics.filter(t => t.completed).length;
-                          setProgress(Math.round((completedCount / newTopics.length) * 100));
+                          updateTopics(newTopics)
+                            .then(() => {
+                              const completedCount = newTopics.filter(t => t.completed).length;
+                              setProgress(Math.round((completedCount / newTopics.length) * 100));
+                            })
+                            .catch((error) => {
+                              console.error('Failed to update progress:', error);
+                            });
                         }}
                         className="w-5 h-5 text-purple-600 rounded border-gray-300 focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 dark:bg-gray-900 dark:border-gray-600"
                       />

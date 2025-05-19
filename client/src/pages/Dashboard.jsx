@@ -8,6 +8,7 @@ import { BookOpenIcon, CubeIcon, DocumentTextIcon, ClockIcon, MapPinIcon } from 
 import { motion } from 'framer-motion';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const progressAnimation = {
   initial: { opacity: 0, scale: 0.8, y: 20 },
@@ -180,6 +181,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [recentActivity, setRecentActivity] = useState([]);
   const [recommendedArticles, setRecommendedArticles] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -197,19 +200,23 @@ const Dashboard = () => {
           [0];
         
         if (mostActiveDomain) {
-          // Using articleService to fetch domain-specific articles
           const articles = await fetchArticlesByDomain(mostActiveDomain.domainName);
           setRecommendedArticles(articles.slice(0, 3));
         }
       } catch (error) {
         console.error('Error fetching data:', error);
+        
+        // If there's an authentication error, redirect to login
+        if (error.message.includes('log in') || error.message.includes('auth')) {
+          navigate('/login', { state: { from: location }, replace: true });
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [navigate, location]);
 
   const calculateOverallProgress = () => {
     if (!domainsProgress.length) return 0;

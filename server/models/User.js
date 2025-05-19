@@ -2,19 +2,57 @@ const mongoose = require('mongoose');
 const { isEmail } = require('validator');
 
 const topicSchema = new mongoose.Schema({
-  id: Number,
-  name: String,
-  completed: Boolean,
-  completedAt: Date
-});
+  id: {
+    type: Number,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  completed: {
+    type: Boolean,
+    default: false
+  },
+  completedAt: {
+    type: Date,
+    default: null
+  }
+}, { _id: false });
 
 const domainProgressSchema = new mongoose.Schema({
-  domainId: String,
-  domainName: String,
-  totalTopics: Number,
-  completedTopics: Number,
-  lastUpdated: Date,
-  topics: [topicSchema]
+  domainId: {
+    type: String,
+    required: true
+  },
+  domainName: {
+    type: String,
+    required: true
+  },
+  totalTopics: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  completedTopics: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  lastUpdated: {
+    type: Date,
+    default: Date.now
+  },
+  topics: {
+    type: [topicSchema],
+    required: true,
+    validate: {
+      validator: function(topics) {
+        return topics.length > 0;
+      },
+      message: 'At least one topic is required'
+    }
+  }
 });
 
 const userSchema = new mongoose.Schema({

@@ -81,25 +81,72 @@ const useDomainProgress = (domainName, defaultTopics) => {
         break;
       }
     }
-  };
-
-  const updateTopics = async (updatedTopics) => {
+  };  const updateTopics = async (updatedTopics) => {
     try {
-      // Update backend
-      await updateDomainProgress(domainId, domainName, updatedTopics);
-      setTopics(updatedTopics);
+      // Save current state for rollback if needed
+      const previousTopics = [...topics];
       
-      // Update localStorage as fallback
+      // Calculate progress
+      const completedCount = updatedTopics.filter(topic => topic.completed).length;
+      const newProgress = Math.round((completedCount / updatedTopics.length) * 100);
+
+      // Optimistically update UI
+      setTopics(updatedTopics);
+      handleProgressChange(newProgress);
+
+      // Update backend first
+      console.log('Updating backend with:', {domainId, domainName, topicsCount: updatedTopics.length});
+      const response = await updateDomainProgress(domainId, domainName, updatedTopics);
+      
+      if (!response || !response.domainProgress) {
+        console.error('Failed to update progress:', response);
+        // Rollback on failure
+        setTopics(previousTopics);
+        handleProgressChange(previousProgress);
+        throw new Error('Failed to update progress on server');
+      }
+
+      // If backend update succeeds, update local state
+      setTopics(response.domainProgress.topics);
+      handleProgressChange(Math.round((response.domainProgress.completedTopics / response.domainProgress.totalTopics) * 100));
+      
+      // Then update localStorage as fallback for offline access
       const key = `domain_${domainName.replace(/\s+/g, '_').toLowerCase()}`;
       localStorage.setItem(key, JSON.stringify(updatedTopics));
 
-      // Calculate and update progress
-      const completedCount = updatedTopics.filter(topic => topic.completed).length;
-      const newProgress = Math.round((completedCount / updatedTopics.length) * 100);
-      handleProgressChange(newProgress);
-    } catch (error) {
+      // Show success message for completion
+      if (newProgress > progress) {
+        if (newProgress === 100) {
+          toast.success('🎉 Congratulations! You\'ve completed this domain!', {
+            duration: 5000
+          });
+        } else {
+          const milestones = [25, 50, 75];
+          const achievedMilestone = milestones.find(m => progress < m && newProgress >= m);
+          if (achievedMilestone) {
+            toast.success(`🌟 You've reached ${achievedMilestone}% in ${domainName}!`, {
+              duration: 3000
+            });
+          }
+        }
+      }    } catch (error) {
       console.error('Error updating topics:', error);
-      toast.error('Failed to save progress. Please try again.');
+      
+      // Show specific error message if available
+      const errorMessage = error.message === 'No authentication token found' 
+        ? 'Please log in to save your progress'
+        : 'Failed to save progress. Please try again.';
+      
+      toast.error(errorMessage, {
+        duration: 4000,
+        position: 'top-center'
+      });
+      
+      if (error.message !== 'No authentication token found') {
+        // Only try to load from localStorage if it's not an auth error
+        const savedTopics = loadDomainProgress(domainName, defaultTopics);
+        setTopics(savedTopics);
+      }
     }
   };
 

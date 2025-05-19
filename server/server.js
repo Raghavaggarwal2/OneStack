@@ -17,16 +17,33 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(express.json());
-
-// Update CORS configuration to allow requests from frontend
+// CORS configuration must come before other middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? process.env.FRONTEND_URL || 'https://yourproductionurl.com' 
     : 'http://localhost:3000',
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  preflightContinue: false,
+  optionsSuccessStatus: 200
 }));
+
+// Other middleware
+app.use(express.json());
+
+// Handle OPTIONS requests explicitly
+app.options('*', cors());
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('Global error:', err);
+  res.status(err.status || 500).json({
+    success: false,
+    error: process.env.NODE_ENV === 'development' ? err.message : 'Server error'
+  });
+});
 
 // Routes
 app.use('/api/auth', authRoutes);

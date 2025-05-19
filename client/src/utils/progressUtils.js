@@ -34,9 +34,24 @@ export const loadDomainProgress = (domainName, defaultTopics) => {
   try {
     const key = `domain_${domainName.replace(/\s+/g, '_').toLowerCase()}`;
     const saved = localStorage.getItem(key);
-    return saved ? JSON.parse(saved) : defaultTopics;
+    
+    if (!saved) {
+      return defaultTopics;
+    }
+
+    const savedTopics = JSON.parse(saved);
+    
+    // Merge saved completion status with default topics to ensure structure is up to date
+    return defaultTopics.map(defaultTopic => {
+      const savedTopic = savedTopics.find(t => t.id === defaultTopic.id);
+      return {
+        ...defaultTopic,
+        completed: savedTopic ? savedTopic.completed : false,
+        completedAt: savedTopic ? savedTopic.completedAt : null
+      };
+    });
   } catch (error) {
     console.error('Error loading progress from localStorage:', error);
     return defaultTopics;
   }
-}; 
+};

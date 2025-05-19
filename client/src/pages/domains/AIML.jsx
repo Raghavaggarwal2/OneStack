@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../../components/ProgressBar';
-import { loadDomainProgress, saveDomainProgress } from '../../utils/progressUtils';
+import useDomainProgress from '../../hooks/useDomainProgress';
 
 // Domain-specific data
 const domainName = "AI & Machine Learning";
@@ -24,14 +24,13 @@ const defaultTopics = [
 
 const AIML = () => {
   const [progress, setProgress] = useState(0);
-  const [topics, setTopics] = useState(defaultTopics);
+  const { topics, updateTopics, isLoading } = useDomainProgress(domainName, defaultTopics);
   
   useEffect(() => {
-    const savedTopics = loadDomainProgress(domainName, defaultTopics);
-    setTopics(savedTopics);
-    const completedCount = savedTopics.filter(topic => topic.completed).length;
-    setProgress(Math.round((completedCount / savedTopics.length) * 100));
-  }, []);
+    // Calculate progress whenever topics change
+    const completedCount = topics.filter(topic => topic.completed).length;
+    setProgress(Math.round((completedCount / topics.length) * 100));
+  }, [topics]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900/40 dark:to-pink-800/40 py-8">
@@ -133,10 +132,14 @@ const AIML = () => {
                         onChange={() => {
                           const newTopics = [...topics];
                           newTopics[index].completed = !newTopics[index].completed;
-                          setTopics(newTopics);
-                          saveDomainProgress(domainName, newTopics);
-                          const completedCount = newTopics.filter(t => t.completed).length;
-                          setProgress(Math.round((completedCount / newTopics.length) * 100));
+                          updateTopics(newTopics)
+                            .then(() => {
+                              const completedCount = newTopics.filter(t => t.completed).length;
+                              setProgress(Math.round((completedCount / newTopics.length) * 100));
+                            })
+                            .catch((error) => {
+                              console.error('Failed to update progress:', error);
+                            });
                         }}
                         className="w-5 h-5 text-pink-600 rounded border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 dark:bg-gray-900 dark:border-gray-600"
                       />

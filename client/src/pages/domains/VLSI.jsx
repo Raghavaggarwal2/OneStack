@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../../components/ProgressBar';
-import { loadDomainProgress, saveDomainProgress } from '../../utils/progressUtils';
+import useDomainProgress from '../../hooks/useDomainProgress';
 
 // Domain-specific data
 const domainName = "VLSI Design (Very Large Scale Integration)";
@@ -24,14 +24,12 @@ const defaultTopics = [
 
 const VLSI = () => {
   const [progress, setProgress] = useState(0);
-  const [topics, setTopics] = useState(defaultTopics);
+  const { topics, updateTopics, isLoading } = useDomainProgress(domainName, defaultTopics);
   
   useEffect(() => {
-    const savedTopics = loadDomainProgress(domainName, defaultTopics);
-    setTopics(savedTopics);
-    const completedCount = savedTopics.filter(topic => topic.completed).length;
-    setProgress(Math.round((completedCount / savedTopics.length) * 100));
-  }, []);
+    const completedCount = topics.filter(topic => topic.completed).length;
+    setProgress(Math.round((completedCount / topics.length) * 100));
+  }, [topics]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 via-zinc-100/50 to-zinc-200 dark:from-zinc-900/40 dark:via-zinc-800/40 dark:to-zinc-700/40 py-8">
@@ -133,10 +131,14 @@ const VLSI = () => {
                         onChange={() => {
                           const newTopics = [...topics];
                           newTopics[index].completed = !newTopics[index].completed;
-                          setTopics(newTopics);
-                          saveDomainProgress(domainName, newTopics);
-                          const completedCount = newTopics.filter(t => t.completed).length;
-                          setProgress(Math.round((completedCount / newTopics.length) * 100));
+                          updateTopics(newTopics)
+                            .then(() => {
+                              const completedCount = newTopics.filter(t => t.completed).length;
+                              setProgress(Math.round((completedCount / newTopics.length) * 100));
+                            })
+                            .catch((error) => {
+                              console.error('Failed to update progress:', error);
+                            });
                         }}
                         className="w-5 h-5 text-zinc-600 rounded border-gray-300 focus:ring-zinc-500 dark:focus:ring-zinc-600 dark:ring-offset-gray-800 dark:bg-gray-900 dark:border-gray-600"
                       />

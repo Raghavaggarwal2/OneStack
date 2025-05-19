@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../../components/ProgressBar';
-import { loadDomainProgress, saveDomainProgress } from '../../utils/progressUtils';
+import useDomainProgress from '../../hooks/useDomainProgress';
 
 // Domain-specific data
 const domainName = "IoT (Internet of Things)";
@@ -24,17 +24,14 @@ const defaultTopics = [
 
 const IoT = () => {
   const [progress, setProgress] = useState(0);
-  const [topics, setTopics] = useState(defaultTopics);
+  const { topics, updateTopics, isLoading } = useDomainProgress(domainName, defaultTopics);
   
   // Load saved progress on component mount
   useEffect(() => {
-    const savedTopics = loadDomainProgress(domainName, defaultTopics);
-    setTopics(savedTopics);
-    
     // Calculate initial progress
-    const completedCount = savedTopics.filter(topic => topic.completed).length;
-    setProgress(Math.round((completedCount / savedTopics.length) * 100));
-  }, []);
+    const completedCount = topics.filter(topic => topic.completed).length;
+    setProgress(Math.round((completedCount / topics.length) * 100));
+  }, [topics]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-cyan-100/50 to-cyan-200 dark:from-cyan-900/40 dark:via-cyan-800/40 dark:to-cyan-700/40 py-8">
@@ -136,10 +133,14 @@ const IoT = () => {
                         onChange={() => {
                           const newTopics = [...topics];
                           newTopics[index].completed = !newTopics[index].completed;
-                          setTopics(newTopics);
-                          saveDomainProgress(domainName, newTopics);
-                          const completedCount = newTopics.filter(t => t.completed).length;
-                          setProgress(Math.round((completedCount / newTopics.length) * 100));
+                          updateTopics(newTopics)
+                            .then(() => {
+                              const completedCount = newTopics.filter(t => t.completed).length;
+                              setProgress(Math.round((completedCount / newTopics.length) * 100));
+                            })
+                            .catch((error) => {
+                              console.error('Failed to update progress:', error);
+                            });
                         }}
                         className="w-5 h-5 text-cyan-600 rounded border-gray-300 focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 dark:bg-gray-900 dark:border-gray-600"
                       />

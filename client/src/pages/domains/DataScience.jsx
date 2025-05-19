@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../../components/ProgressBar';
-import TopicChecklist from '../../components/TopicChecklist';
-import { loadDomainProgress, saveDomainProgress } from '../../utils/progressUtils';
+import useDomainProgress from '../../hooks/useDomainProgress';
 
 // Domain-specific data
 const domainName = "Data Science";
-const domainColor = "bg-green-500"; // From domainColors in domainList.js
+const domainColor = "bg-yellow-500"; // From domainColors in domainList.js
 
 // Sample topics for this domain
 const defaultTopics = [
@@ -26,23 +25,14 @@ const defaultTopics = [
 
 const DataScience = () => {
   const [progress, setProgress] = useState(0);
-  const [topics, setTopics] = useState(defaultTopics);
+  const { topics, updateTopics, isLoading } = useDomainProgress(domainName, defaultTopics);
   
-  // Load saved progress on component mount
+  // Calculate progress whenever topics change
   useEffect(() => {
-    const savedTopics = loadDomainProgress(domainName, defaultTopics);
-    setTopics(savedTopics);
-    
-    // Calculate initial progress
-    const completedCount = savedTopics.filter(topic => topic.completed).length;
-    setProgress(Math.round((completedCount / savedTopics.length) * 100));
-  }, []);
+    const completedCount = topics.filter(topic => topic.completed).length;
+    setProgress(Math.round((completedCount / topics.length) * 100));
+  }, [topics]);
   
-  // Handler for progress updates from TopicChecklist
-  const handleProgressChange = (newProgress) => {
-    setProgress(newProgress);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -143,10 +133,14 @@ const DataScience = () => {
                         onChange={() => {
                           const newTopics = [...topics];
                           newTopics[index].completed = !newTopics[index].completed;
-                          setTopics(newTopics);
-                          saveDomainProgress(domainName, newTopics);
-                          const completedCount = newTopics.filter(t => t.completed).length;
-                          setProgress(Math.round((completedCount / newTopics.length) * 100));
+                          updateTopics(newTopics)
+                            .then(() => {
+                              const completedCount = newTopics.filter(t => t.completed).length;
+                              setProgress(Math.round((completedCount / newTopics.length) * 100));
+                            })
+                            .catch((error) => {
+                              console.error('Failed to update progress:', error);
+                            });
                         }}
                         className="w-5 h-5 text-green-600 rounded border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
                       />
